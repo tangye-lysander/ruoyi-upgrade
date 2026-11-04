@@ -14,6 +14,7 @@ import com.ruoyi.generator.mapper.GenTableMapper;
 import com.ruoyi.generator.util.GenUtils;
 import com.ruoyi.generator.util.VelocityInitializer;
 import com.ruoyi.generator.util.VelocityUtils;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
@@ -21,7 +22,6 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,14 +41,13 @@ import java.util.zip.ZipOutputStream;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class GenTableServiceImpl implements IGenTableService {
     private static final Logger log = LoggerFactory.getLogger(GenTableServiceImpl.class);
 
-    @Autowired
-    private GenTableMapper genTableMapper;
+    private final GenTableMapper genTableMapper;
 
-    @Autowired
-    private GenTableColumnMapper genTableColumnMapper;
+    private final GenTableColumnMapper genTableColumnMapper;
 
     /**
      * 获取代码生成地址

@@ -3,7 +3,7 @@ package com.ruoyi.system.service.impl;
 import com.ruoyi.system.domain.SysLogininfor;
 import com.ruoyi.system.mapper.SysLogininforMapper;
 import com.ruoyi.system.service.ISysLogininforService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +14,10 @@ import java.util.List;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysLogininforServiceImpl implements ISysLogininforService {
 
-    @Autowired
-    private SysLogininforMapper logininforMapper;
+    private final SysLogininforMapper logininforMapper;
 
     /**
      * 新增系统登录日志

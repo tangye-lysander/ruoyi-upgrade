@@ -16,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
  * @author 棠野·Lysander
  */
 @Component
+@RequiredArgsConstructor
 public class TokenService {
     protected static final long MILLIS_SECOND = 1000;
     protected static final long MILLIS_MINUTE = 60 * MILLIS_SECOND;
@@ -45,8 +46,7 @@ public class TokenService {
     // 令牌有效期（默认30分钟）
     @Value("${token.expireTime}")
     private int expireTime;
-    @Autowired
-    private RedisCache redisCache;
+    private final RedisCache redisCache;
 
     /**
      * 获取用户身份信息

@@ -3,7 +3,7 @@ package com.ruoyi.generator.service;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.mapper.GenTableColumnMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +14,9 @@ import java.util.List;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class GenTableColumnServiceImpl implements IGenTableColumnService {
-    @Autowired
-    private GenTableColumnMapper genTableColumnMapper;
+    private final GenTableColumnMapper genTableColumnMapper;
 
     /**
      * 查询业务字段列表

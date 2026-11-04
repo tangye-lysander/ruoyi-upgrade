@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.SysCache;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,10 +23,10 @@ import java.util.*;
 @Tag(name = "缓存监控", description = "Redis 缓存监控与管理")
 @RestController
 @RequestMapping("/monitor/cache")
+@RequiredArgsConstructor
 public class CacheController {
     private final static List<SysCache> caches = new ArrayList<SysCache>();
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     {
         caches.add(new SysCache(CacheConstants.LOGIN_TOKEN_KEY, "用户信息"));

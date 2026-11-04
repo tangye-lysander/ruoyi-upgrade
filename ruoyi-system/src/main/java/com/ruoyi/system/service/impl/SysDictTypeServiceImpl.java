@@ -10,7 +10,7 @@ import com.ruoyi.system.mapper.SysDictDataMapper;
 import com.ruoyi.system.mapper.SysDictTypeMapper;
 import com.ruoyi.system.service.ISysDictTypeService;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +25,11 @@ import java.util.stream.Collectors;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysDictTypeServiceImpl implements ISysDictTypeService {
-    @Autowired
-    private SysDictTypeMapper dictTypeMapper;
+    private final SysDictTypeMapper dictTypeMapper;
 
-    @Autowired
-    private SysDictDataMapper dictDataMapper;
+    private final SysDictDataMapper dictDataMapper;
 
     /**
      * 项目启动时，初始化字典到缓存

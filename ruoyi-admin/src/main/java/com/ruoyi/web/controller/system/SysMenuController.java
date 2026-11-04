@@ -11,7 +11,7 @@ import com.ruoyi.system.service.ISysMenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +27,9 @@ import java.util.Map;
 @Tag(name = "菜单管理", description = "系统菜单管理")
 @RestController
 @RequestMapping("/system/menu")
+@RequiredArgsConstructor
 public class SysMenuController extends BaseController {
-    @Autowired
-    private ISysMenuService menuService;
+    private final ISysMenuService menuService;
 
     /**
      * 获取菜单列表

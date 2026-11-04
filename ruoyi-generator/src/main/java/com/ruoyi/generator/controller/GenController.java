@@ -18,8 +18,8 @@ import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.service.IGenTableColumnService;
 import com.ruoyi.generator.service.IGenTableService;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,12 +37,11 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/tool/gen")
+@RequiredArgsConstructor
 public class GenController extends BaseController {
-    @Autowired
-    private IGenTableService genTableService;
+    private final IGenTableService genTableService;
 
-    @Autowired
-    private IGenTableColumnService genTableColumnService;
+    private final IGenTableColumnService genTableColumnService;
 
     /**
      * 查询代码生成列表

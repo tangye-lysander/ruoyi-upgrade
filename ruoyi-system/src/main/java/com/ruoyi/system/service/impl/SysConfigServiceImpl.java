@@ -10,7 +10,7 @@ import com.ruoyi.system.domain.SysConfig;
 import com.ruoyi.system.mapper.SysConfigMapper;
 import com.ruoyi.system.service.ISysConfigService;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -22,12 +22,11 @@ import java.util.List;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysConfigServiceImpl implements ISysConfigService {
-    @Autowired
-    private SysConfigMapper configMapper;
+    private final SysConfigMapper configMapper;
 
-    @Autowired
-    private RedisCache redisCache;
+    private final RedisCache redisCache;
 
     /**
      * 项目启动时，初始化参数到缓存

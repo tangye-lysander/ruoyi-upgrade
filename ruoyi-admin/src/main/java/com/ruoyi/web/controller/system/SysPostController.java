@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +27,9 @@ import java.util.List;
 @Tag(name = "岗位管理", description = "系统岗位管理")
 @RestController
 @RequestMapping("/system/post")
+@RequiredArgsConstructor
 public class SysPostController extends BaseController {
-    @Autowired
-    private ISysPostService postService;
+    private final ISysPostService postService;
 
     /**
      * 获取岗位列表

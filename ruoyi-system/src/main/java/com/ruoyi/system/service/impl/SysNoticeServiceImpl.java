@@ -3,7 +3,7 @@ package com.ruoyi.system.service.impl;
 import com.ruoyi.system.domain.SysNotice;
 import com.ruoyi.system.mapper.SysNoticeMapper;
 import com.ruoyi.system.service.ISysNoticeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +14,9 @@ import java.util.List;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysNoticeServiceImpl implements ISysNoticeService {
-    @Autowired
-    private SysNoticeMapper noticeMapper;
+    private final SysNoticeMapper noticeMapper;
 
     /**
      * 查询公告信息

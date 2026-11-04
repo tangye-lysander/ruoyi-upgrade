@@ -16,8 +16,8 @@ import com.ruoyi.system.service.ISysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.dromara.x.file.storage.core.FileStorageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,15 +31,13 @@ import java.util.Map;
 @Tag(name = "个人信息", description = "个人信息查看与维护")
 @RestController
 @RequestMapping("/system/user/profile")
+@RequiredArgsConstructor
 public class SysProfileController extends BaseController {
-    @Autowired
-    private ISysUserService userService;
+    private final ISysUserService userService;
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
-    @Autowired
-    private FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService;
 
     /**
      * 个人信息

@@ -14,8 +14,8 @@ import com.ruoyi.quartz.service.ISysJobService;
 import com.ruoyi.quartz.util.CronUtils;
 import com.ruoyi.quartz.util.ScheduleUtils;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +28,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/monitor/job")
+@RequiredArgsConstructor
 public class SysJobController extends BaseController {
-    @Autowired
-    private ISysJobService jobService;
+    private final ISysJobService jobService;
 
     /**
      * 查询定时任务列表

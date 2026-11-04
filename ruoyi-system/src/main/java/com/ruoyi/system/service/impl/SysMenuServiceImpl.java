@@ -15,9 +15,9 @@ import com.ruoyi.system.mapper.SysMenuMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysRoleMenuMapper;
 import com.ruoyi.system.service.ISysMenuService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,18 +30,16 @@ import java.util.stream.Collectors;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysMenuServiceImpl implements ISysMenuService {
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
     public static final Long MENU_ROOT_ID = 0L;
     private static final Logger log = LoggerFactory.getLogger(SysMenuServiceImpl.class);
-    @Autowired
-    private SysMenuMapper menuMapper;
+    private final SysMenuMapper menuMapper;
 
-    @Autowired
-    private SysRoleMapper roleMapper;
+    private final SysRoleMapper roleMapper;
 
-    @Autowired
-    private SysRoleMenuMapper roleMenuMapper;
+    private final SysRoleMenuMapper roleMenuMapper;
 
     /**
      * 根据用户查询系统菜单列表

@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.mapper.SysPostMapper;
 import com.ruoyi.system.mapper.SysUserPostMapper;
 import com.ruoyi.system.service.ISysPostService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,12 +18,11 @@ import java.util.List;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysPostServiceImpl implements ISysPostService {
-    @Autowired
-    private SysPostMapper postMapper;
+    private final SysPostMapper postMapper;
 
-    @Autowired
-    private SysUserPostMapper userPostMapper;
+    private final SysUserPostMapper userPostMapper;
 
     /**
      * 查询岗位信息集合

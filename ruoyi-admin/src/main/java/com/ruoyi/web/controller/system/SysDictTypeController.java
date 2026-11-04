@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +27,9 @@ import java.util.List;
 @Tag(name = "字典类型", description = "系统字典类型管理")
 @RestController
 @RequestMapping("/system/dict/type")
+@RequiredArgsConstructor
 public class SysDictTypeController extends BaseController {
-    @Autowired
-    private ISysDictTypeService dictTypeService;
+    private final ISysDictTypeService dictTypeService;
 
     @Operation(summary = "获取字典类型列表", description = "分页查询，支持按字典名称、类型等条件过滤")
     @PreAuthorize("@ss.hasPermi('system:dict:list')")

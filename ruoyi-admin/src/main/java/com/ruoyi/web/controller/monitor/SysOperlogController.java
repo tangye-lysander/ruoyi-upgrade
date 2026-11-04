@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +26,9 @@ import java.util.List;
 @Tag(name = "操作日志", description = "系统操作日志监控")
 @RestController
 @RequestMapping("/monitor/operlog")
+@RequiredArgsConstructor
 public class SysOperlogController extends BaseController {
-    @Autowired
-    private ISysOperLogService operLogService;
+    private final ISysOperLogService operLogService;
 
     @Operation(summary = "获取操作日志列表", description = "分页查询，支持按系统模块、操作人员、时间范围等条件过滤")
     @PreAuthorize("@ss.hasPermi('monitor:operlog:list')")

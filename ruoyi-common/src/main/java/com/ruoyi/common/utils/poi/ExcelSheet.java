@@ -1,5 +1,7 @@
 package com.ruoyi.common.utils.poi;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +10,15 @@ import java.util.List;
  * <p>
  * 使用示例：
  * <pre>
- *   List<ExcelSheet<?>> sheets = new ArrayList<>();
- *   sheets.add(new ExcelSheet<>("参数数据", configList, Config.class, "参数信息"));
- *   sheets.add(new ExcelSheet<>("岗位数据", postList, Post.class, "岗位信息"));
+ *   List&lt;ExcelSheet&gt; sheets = new ArrayList&lt;&gt;();
+ *   sheets.add(new ExcelSheet&lt;&gt;("参数数据", configList, Config.class, "参数信息"));
+ *   sheets.add(new ExcelSheet&lt;&gt;("岗位数据", postList, Post.class, "岗位信息"));
  *   return ExcelUtil.exportMultiSheet(sheets);
  * </pre>
  *
  * @author 棠野·Lysander
  */
+@Data
 public class ExcelSheet<T> {
     /**
      * Sheet 名称
@@ -46,37 +49,5 @@ public class ExcelSheet<T> {
         this.list = list != null ? list : new ArrayList<>();
         this.clazz = clazz;
         this.title = title != null ? title : "";
-    }
-
-    public String getSheetName() {
-        return sheetName;
-    }
-
-    public void setSheetName(String sheetName) {
-        this.sheetName = sheetName;
-    }
-
-    public List<T> getList() {
-        return list;
-    }
-
-    public void setList(List<T> list) {
-        this.list = list;
-    }
-
-    public Class<T> getClazz() {
-        return clazz;
-    }
-
-    public void setClazz(Class<T> clazz) {
-        this.clazz = clazz;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 }

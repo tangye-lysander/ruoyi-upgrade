@@ -8,7 +8,7 @@ import com.ruoyi.framework.web.service.SysRegisterService;
 import com.ruoyi.system.service.ISysConfigService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,12 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Tag(name = "注册", description = "用户自助注册")
 @RestController
+@RequiredArgsConstructor
 public class SysRegisterController extends BaseController {
-    @Autowired
-    private SysRegisterService registerService;
+    private final SysRegisterService registerService;
 
-    @Autowired
-    private ISysConfigService configService;
+    private final ISysConfigService configService;
 
     @Operation(summary = "用户注册", description = "需系统开启注册功能（参数 sys.account.registerUser）")
     @PostMapping("/register")

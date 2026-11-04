@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +30,11 @@ import java.util.List;
 @Tag(name = "字典数据", description = "系统字典数据管理")
 @RestController
 @RequestMapping("/system/dict/data")
+@RequiredArgsConstructor
 public class SysDictDataController extends BaseController {
-    @Autowired
-    private ISysDictDataService dictDataService;
+    private final ISysDictDataService dictDataService;
 
-    @Autowired
-    private ISysDictTypeService dictTypeService;
+    private final ISysDictTypeService dictTypeService;
 
     @Operation(summary = "获取字典数据列表", description = "分页查询，按字典类型过滤")
     @PreAuthorize("@ss.hasPermi('system:dict:list')")

@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +27,11 @@ import java.util.List;
 @Tag(name = "登录日志", description = "系统登录日志监控")
 @RestController
 @RequestMapping("/monitor/logininfor")
+@RequiredArgsConstructor
 public class SysLogininforController extends BaseController {
-    @Autowired
-    private ISysLogininforService logininforService;
+    private final ISysLogininforService logininforService;
 
-    @Autowired
-    private SysPasswordService passwordService;
+    private final SysPasswordService passwordService;
 
     @Operation(summary = "获取登录日志列表", description = "分页查询，支持按登录地址、用户名、状态、时间范围等条件过滤")
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")

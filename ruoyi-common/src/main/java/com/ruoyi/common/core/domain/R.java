@@ -1,6 +1,7 @@
 package com.ruoyi.common.core.domain;
 
 import com.ruoyi.common.constant.HttpStatus;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  *
  * @author 棠野·Lysander
  */
+@Data
 public class R<T> implements Serializable {
     /**
      * 成功
@@ -71,29 +73,5 @@ public class R<T> implements Serializable {
 
     public static <T> Boolean isSuccess(R<T> ret) {
         return R.SUCCESS == ret.getCode();
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

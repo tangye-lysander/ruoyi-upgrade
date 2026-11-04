@@ -11,11 +11,11 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,11 +34,11 @@ import java.util.List;
 @Tag(name = "通用文件接口", description = "通用文件上传与下载")
 @RestController
 @RequestMapping("/common")
+@RequiredArgsConstructor
 public class CommonController {
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
     private static final String FILE_DELIMITER = ",";
-    @Autowired
-    private FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService;
 
     /**
      * 通用下载请求

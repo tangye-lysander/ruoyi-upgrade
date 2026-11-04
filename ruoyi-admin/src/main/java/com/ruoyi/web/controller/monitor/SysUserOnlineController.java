@@ -14,7 +14,7 @@ import com.ruoyi.system.service.ISysUserOnlineService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +31,11 @@ import java.util.List;
 @Tag(name = "在线用户", description = "在线用户监控")
 @RestController
 @RequestMapping("/monitor/online")
+@RequiredArgsConstructor
 public class SysUserOnlineController extends BaseController {
-    @Autowired
-    private ISysUserOnlineService userOnlineService;
+    private final ISysUserOnlineService userOnlineService;
 
-    @Autowired
-    private RedisCache redisCache;
+    private final RedisCache redisCache;
 
     @Operation(summary = "获取在线用户列表", description = "分页查询，支持按登录地址、用户名过滤")
     @PreAuthorize("@ss.hasPermi('monitor:online:list')")

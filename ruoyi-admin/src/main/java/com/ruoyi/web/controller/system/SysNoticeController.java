@@ -12,7 +12,7 @@ import com.ruoyi.system.service.ISysNoticeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +27,11 @@ import java.util.List;
 @Tag(name = "通知公告", description = "系统通知公告管理")
 @RestController
 @RequestMapping("/system/notice")
+@RequiredArgsConstructor
 public class SysNoticeController extends BaseController {
-    @Autowired
-    private ISysNoticeService noticeService;
+    private final ISysNoticeService noticeService;
 
-    @Autowired
-    private ISysNoticeReadService noticeReadService;
+    private final ISysNoticeReadService noticeReadService;
 
     /**
      * 获取通知公告列表

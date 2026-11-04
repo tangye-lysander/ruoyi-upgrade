@@ -8,7 +8,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.service.ISysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,15 +23,14 @@ import java.util.Map;
  */
 @Tag(name = "首页", description = "系统入口与锁屏")
 @RestController
+@RequiredArgsConstructor
 public class SysIndexController {
     /**
      * 系统基础配置
      */
-    @Autowired
-    private RuoYiConfig ruoyiConfig;
+    private final RuoYiConfig ruoyiConfig;
 
-    @Autowired
-    private ISysUserService userService;
+    private final ISysUserService userService;
 
     /**
      * 访问首页，提示语

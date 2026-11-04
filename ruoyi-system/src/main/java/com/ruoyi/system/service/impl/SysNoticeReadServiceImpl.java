@@ -4,7 +4,7 @@ import com.ruoyi.system.domain.SysNotice;
 import com.ruoyi.system.domain.SysNoticeRead;
 import com.ruoyi.system.mapper.SysNoticeReadMapper;
 import com.ruoyi.system.service.ISysNoticeReadService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +16,9 @@ import java.util.Map;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysNoticeReadServiceImpl implements ISysNoticeReadService {
-    @Autowired
-    private SysNoticeReadMapper noticeReadMapper;
+    private final SysNoticeReadMapper noticeReadMapper;
 
     /**
      * 标记已读

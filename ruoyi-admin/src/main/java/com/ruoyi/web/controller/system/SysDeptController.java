@@ -11,8 +11,8 @@ import com.ruoyi.system.service.ISysDeptService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +28,9 @@ import java.util.Map;
 @Tag(name = "部门管理", description = "系统部门管理")
 @RestController
 @RequestMapping("/system/dept")
+@RequiredArgsConstructor
 public class SysDeptController extends BaseController {
-    @Autowired
-    private ISysDeptService deptService;
+    private final ISysDeptService deptService;
 
     /**
      * 获取部门列表

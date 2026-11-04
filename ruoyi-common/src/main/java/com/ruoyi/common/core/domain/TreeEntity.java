@@ -1,5 +1,10 @@
 package com.ruoyi.common.core.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +13,10 @@ import java.util.List;
  *
  * @author 棠野·Lysander
  */
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 public class TreeEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -35,44 +44,4 @@ public class TreeEntity extends BaseEntity {
      * 子部门
      */
     private List<?> children = new ArrayList<>();
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public String getAncestors() {
-        return ancestors;
-    }
-
-    public void setAncestors(String ancestors) {
-        this.ancestors = ancestors;
-    }
-
-    public List<?> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<?> children) {
-        this.children = children;
-    }
 }

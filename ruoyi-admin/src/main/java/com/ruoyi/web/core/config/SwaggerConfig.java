@@ -7,7 +7,7 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,12 +17,12 @@ import org.springframework.context.annotation.Configuration;
  * @author 棠野·Lysander
  */
 @Configuration
+@RequiredArgsConstructor
 public class SwaggerConfig {
     /**
      * 系统基础配置
      */
-    @Autowired
-    private RuoYiConfig ruoyiConfig;
+    private final RuoYiConfig ruoyiConfig;
 
     /**
      * 自定义的 OpenAPI 对象

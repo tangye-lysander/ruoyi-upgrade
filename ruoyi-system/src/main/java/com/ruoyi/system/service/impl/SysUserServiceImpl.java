@@ -17,9 +17,9 @@ import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysUserService;
 import jakarta.validation.Validator;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -35,24 +35,17 @@ import java.util.stream.Collectors;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysUserServiceImpl implements ISysUserService {
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
-    @Autowired
-    protected Validator validator;
-    @Autowired
-    private SysUserMapper userMapper;
-    @Autowired
-    private SysRoleMapper roleMapper;
-    @Autowired
-    private SysPostMapper postMapper;
-    @Autowired
-    private SysUserRoleMapper userRoleMapper;
-    @Autowired
-    private SysUserPostMapper userPostMapper;
-    @Autowired
-    private ISysConfigService configService;
-    @Autowired
-    private ISysDeptService deptService;
+    private final Validator validator;
+    private final SysUserMapper userMapper;
+    private final SysRoleMapper roleMapper;
+    private final SysPostMapper postMapper;
+    private final SysUserRoleMapper userRoleMapper;
+    private final SysUserPostMapper userPostMapper;
+    private final ISysConfigService configService;
+    private final ISysDeptService deptService;
 
     /**
      * 根据条件分页查询用户列表

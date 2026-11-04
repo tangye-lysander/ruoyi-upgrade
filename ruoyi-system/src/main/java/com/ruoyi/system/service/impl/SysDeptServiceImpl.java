@@ -13,7 +13,7 @@ import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.mapper.SysDeptMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.service.ISysDeptService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +28,11 @@ import java.util.stream.Collectors;
  * @author 棠野·Lysander
  */
 @Service
+@RequiredArgsConstructor
 public class SysDeptServiceImpl implements ISysDeptService {
-    @Autowired
-    private SysDeptMapper deptMapper;
+    private final SysDeptMapper deptMapper;
 
-    @Autowired
-    private SysRoleMapper roleMapper;
+    private final SysRoleMapper roleMapper;
 
     /**
      * 查询部门管理数据
