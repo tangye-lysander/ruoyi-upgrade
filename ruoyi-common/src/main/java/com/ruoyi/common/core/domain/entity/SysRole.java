@@ -3,6 +3,7 @@ package com.ruoyi.common.core.domain.entity;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,6 +17,7 @@ import java.util.Set;
  *
  * @author 棠野·Lysander
  */
+@Schema(description = "角色对象")
 public class SysRole extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -23,30 +25,35 @@ public class SysRole extends BaseEntity {
      * 角色ID
      */
     @Excel(name = "角色序号", cellType = ColumnType.NUMERIC)
+    @Schema(description = "角色编号")
     private Long roleId;
 
     /**
      * 角色名称
      */
     @Excel(name = "角色名称")
+    @Schema(description = "角色名称（列表查询条件）")
     private String roleName;
 
     /**
      * 角色权限
      */
     @Excel(name = "角色权限")
+    @Schema(description = "角色权限字符（列表查询条件）")
     private String roleKey;
 
     /**
      * 角色排序
      */
     @Excel(name = "角色排序")
+    @Schema(description = "显示顺序")
     private Integer roleSort;
 
     /**
      * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）
      */
     @Excel(name = "数据范围", readConverterExp = "1=所有数据权限,2=自定义数据权限,3=本部门数据权限,4=本部门及以下数据权限,5=仅本人数据权限")
+    @Schema(description = "数据范围（1全部 2自定义 3本部门 4本部门及以下 5仅本人）")
     private String dataScope;
 
     /**
@@ -63,6 +70,7 @@ public class SysRole extends BaseEntity {
      * 角色状态（0正常 1停用）
      */
     @Excel(name = "角色状态", readConverterExp = "0=正常,1=停用")
+    @Schema(description = "状态（0正常 1停用，列表查询条件）")
     private String status;
 
     /**
@@ -78,11 +86,13 @@ public class SysRole extends BaseEntity {
     /**
      * 菜单组
      */
+    @Schema(description = "菜单编号集合")
     private Long[] menuIds;
 
     /**
      * 部门组（数据权限）
      */
+    @Schema(description = "部门编号集合（数据权限）")
     private Long[] deptIds;
 
     /**

@@ -12,6 +12,18 @@ ruoyi:
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
   captchaType: math
+  # aliyun oss 配置
+  oss:
+    # 端点
+    endpoint: oss-${ruoyi.oss.region}.aliyuncs.com
+    # 存储桶名称
+    bucket-name: astriva
+    # 区域
+    region: cn-hangzhou
+    # AK 访问密钥（从环境变量读取）
+    access-key: ${OSS_ACCESS_KEY_ID}
+    # SK 密钥（从环境变量读取）
+    secret-key: ${OSS_ACCESS_KEY_SECRET}
 
 # 开发环境配置
 server:
@@ -75,7 +87,7 @@ spring:
       # 数据库索引
       database: 0
       # 密码
-      password:
+      password: 123456
       # 连接超时时间
       timeout: 10s
       lettuce:
@@ -95,8 +107,8 @@ token:
   header: Authorization
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
-  # 令牌有效期（默认30分钟）
-  expireTime: 30
+  # 令牌有效期（分钟）
+  expireTime: 40320
 
 # MyBatis配置
 mybatis:
@@ -121,18 +133,6 @@ springdoc:
     enabled: true
     path: /swagger-ui.html
     tags-sorter: alpha
-  group-configs:
-    - group: 'default'
-      display-name: '测试模块'
-      paths-to-match: '/**'
-      packages-to-scan: com.ruoyi.web.controller.tool
-
-# 防盗链配置
-referer:
-  # 防盗链开关
-  enabled: false
-  # 允许的域名列表
-  allowed-domains: localhost,127.0.0.1,ruoyi.vip,www.ruoyi.vip
 
 # 防止XSS攻击
 xss:
@@ -142,3 +142,24 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# X-File-Storage 文件存储配置
+dromara.x-file-storage:
+  # 使用的存储平台
+  default-platform: aliyun-oss
+  # aliyun OSS 平台配置
+  aliyun-oss:
+    # 存储平台配置项
+    - platform: aliyun-oss
+      # 启用存储
+      enable-storage: true
+      # AK 访问密钥
+      access-key: ${ruoyi.oss.access-key}
+      # SK 密钥
+      secret-key: ${ruoyi.oss.secret-key}
+      # 访问节点
+      end-point: ${ruoyi.oss.endpoint}
+      # 存储桶名称
+      bucket-name: ${ruoyi.oss.bucket-name}
+      # 访问域名
+      domain: https://${ruoyi.oss.bucket-name}.${ruoyi.oss.endpoint}/

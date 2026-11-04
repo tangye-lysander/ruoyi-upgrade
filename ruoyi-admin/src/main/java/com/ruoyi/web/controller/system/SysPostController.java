@@ -8,6 +8,9 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.service.ISysPostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +24,7 @@ import java.util.List;
  *
  * @author 棠野·Lysander
  */
+@Tag(name = "岗位管理", description = "系统岗位管理")
 @RestController
 @RequestMapping("/system/post")
 public class SysPostController extends BaseController {
@@ -30,6 +34,7 @@ public class SysPostController extends BaseController {
     /**
      * 获取岗位列表
      */
+    @Operation(summary = "获取岗位列表", description = "分页查询，支持按岗位名、编码、状态等条件过滤")
     @PreAuthorize("@ss.hasPermi('system:post:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysPost post) {
@@ -38,6 +43,7 @@ public class SysPostController extends BaseController {
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出岗位列表", description = "按查询条件导出岗位数据 Excel")
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('system:post:export')")
     @PostMapping("/export")
@@ -50,15 +56,18 @@ public class SysPostController extends BaseController {
     /**
      * 根据岗位编号获取详细信息
      */
+    @Operation(summary = "获取岗位详细信息")
     @PreAuthorize("@ss.hasPermi('system:post:query')")
     @GetMapping(value = "/{postId}")
-    public AjaxResult getInfo(@PathVariable Long postId) {
+    public AjaxResult getInfo(
+            @Parameter(description = "岗位编号", required = true) @PathVariable Long postId) {
         return success(postService.selectPostById(postId));
     }
 
     /**
      * 新增岗位
      */
+    @Operation(summary = "新增岗位")
     @PreAuthorize("@ss.hasPermi('system:post:add')")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -75,6 +84,7 @@ public class SysPostController extends BaseController {
     /**
      * 修改岗位
      */
+    @Operation(summary = "修改岗位")
     @PreAuthorize("@ss.hasPermi('system:post:edit')")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -91,16 +101,19 @@ public class SysPostController extends BaseController {
     /**
      * 删除岗位
      */
+    @Operation(summary = "删除岗位", description = "支持批量，路径参数为逗号分隔的岗位编号")
     @PreAuthorize("@ss.hasPermi('system:post:remove')")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{postIds}")
-    public AjaxResult remove(@PathVariable Long[] postIds) {
+    public AjaxResult remove(
+            @Parameter(description = "岗位编号集合", required = true) @PathVariable Long[] postIds) {
         return toAjax(postService.deletePostByIds(postIds));
     }
 
     /**
      * 获取岗位选择框列表
      */
+    @Operation(summary = "获取岗位选择框列表")
     @GetMapping("/optionselect")
     public AjaxResult optionselect() {
         List<SysPost> posts = postService.selectPostAll();

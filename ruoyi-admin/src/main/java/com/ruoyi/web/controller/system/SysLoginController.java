@@ -15,6 +15,8 @@ import com.ruoyi.framework.web.service.SysPermissionService;
 import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysMenuService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +32,7 @@ import java.util.Set;
  *
  * @author 棠野·Lysander
  */
+@Tag(name = "登录认证", description = "登录、用户信息与路由")
 @RestController
 public class SysLoginController {
     @Autowired
@@ -53,6 +56,7 @@ public class SysLoginController {
      * @param loginBody 登录信息
      * @return 结果
      */
+    @Operation(summary = "登录", description = "请求体传 username、password、code（验证码）、uuid；成功返回 token")
     @PostMapping("/login")
     public AjaxResult login(@RequestBody LoginBody loginBody) {
         AjaxResult ajax = AjaxResult.success();
@@ -68,6 +72,7 @@ public class SysLoginController {
      *
      * @return 用户信息
      */
+    @Operation(summary = "获取用户信息", description = "返回当前用户 user、角色 roles、权限 permissions 及密码策略提示")
     @GetMapping("getInfo")
     public AjaxResult getInfo() {
         LoginUser loginUser = SecurityUtils.getLoginUser();
@@ -95,6 +100,7 @@ public class SysLoginController {
      *
      * @return 路由信息
      */
+    @Operation(summary = "获取路由信息", description = "返回当前用户可见的前端动态路由")
     @GetMapping("getRouters")
     public AjaxResult getRouters() {
         Long userId = SecurityUtils.getUserId();

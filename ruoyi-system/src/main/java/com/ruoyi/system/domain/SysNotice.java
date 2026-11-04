@@ -3,6 +3,7 @@ package com.ruoyi.system.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.xss.Xss;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -13,37 +14,44 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author 棠野·Lysander
  */
+@Schema(description = "通知公告对象")
 public class SysNotice extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 公告ID
      */
+    @Schema(description = "公告编号")
     private Long noticeId;
 
     /**
      * 公告标题
      */
+    @Schema(description = "公告标题（列表查询条件）")
     private String noticeTitle;
 
     /**
      * 公告类型（1通知 2公告）
      */
+    @Schema(description = "公告类型（1通知 2公告，列表查询条件）")
     private String noticeType;
 
     /**
      * 公告内容
      */
+    @Schema(description = "公告内容（富文本）")
     private String noticeContent;
 
     /**
      * 公告状态（0正常 1关闭）
      */
+    @Schema(description = "状态（0正常 1关闭，列表查询条件）")
     private String status;
 
     /**
      * 是否已读
      */
+    @Schema(description = "当前用户是否已读")
     @JsonProperty("isRead")
     private boolean isRead;
 

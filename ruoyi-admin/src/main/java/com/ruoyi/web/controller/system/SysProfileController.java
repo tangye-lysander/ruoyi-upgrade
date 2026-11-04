@@ -1,7 +1,6 @@
 package com.ruoyi.web.controller.system;
 
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -10,11 +9,14 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.file.FileUploadUtils;
-import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.utils.file.MimeTypeUtils;
+import com.ruoyi.common.utils.file.OssFileUtils;
 import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.service.ISysUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.dromara.x.file.storage.core.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +28,7 @@ import java.util.Map;
  *
  * @author 棠野·Lysander
  */
+@Tag(name = "个人信息", description = "个人信息查看与维护")
 @RestController
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController {
@@ -35,9 +38,13 @@ public class SysProfileController extends BaseController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private FileStorageService fileStorageService;
+
     /**
      * 个人信息
      */
+    @Operation(summary = "个人信息")
     @GetMapping
     public AjaxResult profile() {
         LoginUser loginUser = getLoginUser();
@@ -51,6 +58,7 @@ public class SysProfileController extends BaseController {
     /**
      * 修改用户
      */
+    @Operation(summary = "修改用户", description = "修改当前登录用户的昵称、邮箱、手机号、性别")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult updateProfile(@RequestBody SysUser user) {
@@ -77,6 +85,7 @@ public class SysProfileController extends BaseController {
     /**
      * 重置密码
      */
+    @Operation(summary = "重置密码", description = "传入 oldPassword 与 newPassword 修改当前用户密码")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
     public AjaxResult updatePwd(@RequestBody Map<String, String> params) {
@@ -106,21 +115,33 @@ public class SysProfileController extends BaseController {
     /**
      * 头像上传
      */
+    @Operation(summary = "用户头像上传", description = "上传头像图片并更新当前用户头像，返回 imgUrl")
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
-    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
+    public AjaxResult avatar(
+            @Parameter(description = "头像图片文件", required = true)
+            @RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty()) {
             LoginUser loginUser = getLoginUser();
-            String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION, true);
-            if (userService.updateUserAvatar(loginUser.getUserId(), avatar)) {
+            // 文件校验（图片扩展名）
+            OssFileUtils.checkAllowed(file, MimeTypeUtils.IMAGE_EXTENSION);
+            // 生成 objectKey（形如 /img/2026/07/26/xxx.jpg）
+            String objectKey = OssFileUtils.buildObjectKey(OssFileUtils.getExtension(file));
+            // 上传 OSS
+            fileStorageService.of(file)
+                    .setPath(OssFileUtils.getStoragePath(objectKey))
+                    .setSaveFilename(OssFileUtils.getSaveFilename(objectKey))
+                    .upload();
+            if (userService.updateUserAvatar(loginUser.getUserId(), objectKey)) {
+                // 删除旧头像
                 String oldAvatar = loginUser.getUser().getAvatar();
                 if (StringUtils.isNotEmpty(oldAvatar)) {
-                    FileUtils.deleteFile(RuoYiConfig.getProfile() + FileUtils.stripPrefix(oldAvatar));
+                    fileStorageService.delete(OssFileUtils.getFileUrl(oldAvatar));
                 }
                 AjaxResult ajax = AjaxResult.success();
-                ajax.put("imgUrl", avatar);
+                ajax.put("imgUrl", objectKey);
                 // 更新缓存用户头像
-                loginUser.getUser().setAvatar(avatar);
+                loginUser.getUser().setAvatar(objectKey);
                 tokenService.setLoginUser(loginUser);
                 return ajax;
             }

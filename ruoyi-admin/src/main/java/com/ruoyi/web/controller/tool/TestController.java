@@ -4,6 +4,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.utils.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ import java.util.Map;
  *
  * @author 棠野·Lysander
  */
-@Tag(name = "用户信息管理")
+@Tag(name = "用户信息管理", description = "Swagger 测试用例（内存模拟数据）")
 @RestController
 @RequestMapping("/test/user")
 public class TestController extends BaseController {
@@ -38,8 +39,8 @@ public class TestController extends BaseController {
 
     @Operation(summary = "获取用户详细")
     @GetMapping("/{userId}")
-    public R<UserEntity> getUser(@PathVariable(name = "userId")
-                                 Integer userId) {
+    public R<UserEntity> getUser(@Parameter(description = "用户编号", required = true)
+                                 @PathVariable(name = "userId") Integer userId) {
         if (!users.isEmpty() && users.containsKey(userId)) {
             return R.ok(users.get(userId));
         } else {
@@ -49,7 +50,7 @@ public class TestController extends BaseController {
 
     @Operation(summary = "新增用户")
     @PostMapping("/save")
-    public R<String> save(UserEntity user) {
+    public R<String> save(@Parameter(description = "用户信息（表单参数）") UserEntity user) {
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
             return R.fail("用户ID不能为空");
         }
@@ -59,8 +60,7 @@ public class TestController extends BaseController {
 
     @Operation(summary = "更新用户")
     @PutMapping("/update")
-    public R<String> update(@RequestBody
-                            UserEntity user) {
+    public R<String> update(@Parameter(description = "用户信息") @RequestBody UserEntity user) {
         if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
             return R.fail("用户ID不能为空");
         }
@@ -74,8 +74,8 @@ public class TestController extends BaseController {
 
     @Operation(summary = "删除用户信息")
     @DeleteMapping("/{userId}")
-    public R<String> delete(@PathVariable(name = "userId")
-                            Integer userId) {
+    public R<String> delete(@Parameter(description = "用户编号", required = true)
+                            @PathVariable(name = "userId") Integer userId) {
         if (!users.isEmpty() && users.containsKey(userId)) {
             users.remove(userId);
             return R.ok();

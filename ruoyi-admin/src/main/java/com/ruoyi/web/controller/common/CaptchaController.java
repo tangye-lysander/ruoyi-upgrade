@@ -9,6 +9,8 @@ import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.common.utils.sign.Base64;
 import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.system.service.ISysConfigService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author 棠野·Lysander
  */
+@Tag(name = "验证码", description = "登录验证码生成")
 @RestController
 public class CaptchaController {
     @Resource(name = "captchaProducer")
@@ -43,6 +46,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
+    @Operation(summary = "生成验证码", description = "返回 Base64 图片 img、唯一标识 uuid 及验证码开关状态 captchaEnabled")
     @GetMapping("/captchaImage")
     public AjaxResult getCode(HttpServletResponse response) throws IOException {
         AjaxResult ajax = AjaxResult.success();

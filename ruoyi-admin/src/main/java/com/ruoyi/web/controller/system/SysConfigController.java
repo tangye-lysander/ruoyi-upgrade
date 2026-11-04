@@ -8,6 +8,9 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysConfig;
 import com.ruoyi.system.service.ISysConfigService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +24,7 @@ import java.util.List;
  *
  * @author 棠野·Lysander
  */
+@Tag(name = "参数配置", description = "系统参数配置管理")
 @RestController
 @RequestMapping("/system/config")
 public class SysConfigController extends BaseController {
@@ -30,6 +34,7 @@ public class SysConfigController extends BaseController {
     /**
      * 获取参数配置列表
      */
+    @Operation(summary = "获取参数配置列表", description = "分页查询，支持按参数名、键名、状态等条件过滤")
     @PreAuthorize("@ss.hasPermi('system:config:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysConfig config) {
@@ -38,6 +43,7 @@ public class SysConfigController extends BaseController {
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出参数配置列表", description = "按查询条件导出参数数据 Excel")
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('system:config:export')")
     @PostMapping("/export")
@@ -50,23 +56,28 @@ public class SysConfigController extends BaseController {
     /**
      * 根据参数编号获取详细信息
      */
+    @Operation(summary = "获取参数详细信息")
     @PreAuthorize("@ss.hasPermi('system:config:query')")
     @GetMapping(value = "/{configId}")
-    public AjaxResult getInfo(@PathVariable Long configId) {
+    public AjaxResult getInfo(
+            @Parameter(description = "参数编号", required = true) @PathVariable Long configId) {
         return success(configService.selectConfigById(configId));
     }
 
     /**
      * 根据参数键名查询参数值
      */
+    @Operation(summary = "根据参数键名查询参数值", description = "常用于前端读取系统参数")
     @GetMapping(value = "/configKey/{configKey}")
-    public AjaxResult getConfigKey(@PathVariable String configKey) {
+    public AjaxResult getConfigKey(
+            @Parameter(description = "参数键名", required = true) @PathVariable String configKey) {
         return success(configService.selectConfigByKey(configKey));
     }
 
     /**
      * 新增参数配置
      */
+    @Operation(summary = "新增参数配置")
     @PreAuthorize("@ss.hasPermi('system:config:add')")
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -81,6 +92,7 @@ public class SysConfigController extends BaseController {
     /**
      * 修改参数配置
      */
+    @Operation(summary = "修改参数配置")
     @PreAuthorize("@ss.hasPermi('system:config:edit')")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -95,10 +107,12 @@ public class SysConfigController extends BaseController {
     /**
      * 删除参数配置
      */
+    @Operation(summary = "删除参数配置", description = "支持批量，路径参数为逗号分隔的参数编号")
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{configIds}")
-    public AjaxResult remove(@PathVariable Long[] configIds) {
+    public AjaxResult remove(
+            @Parameter(description = "参数编号集合", required = true) @PathVariable Long[] configIds) {
         configService.deleteConfigByIds(configIds);
         return success();
     }
@@ -106,6 +120,7 @@ public class SysConfigController extends BaseController {
     /**
      * 刷新参数缓存
      */
+    @Operation(summary = "刷新参数缓存")
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
     @Log(title = "参数管理", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")

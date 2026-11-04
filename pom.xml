@@ -31,6 +31,8 @@
         <jwt.version>0.9.1</jwt.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <springdoc.version>2.9.0</springdoc.version>
+        <x-file-storage.version>2.3.0</x-file-storage.version>
+        <aliyun-oss>3.16.1</aliyun-oss>
     </properties>
 
     <!-- 依赖声明 -->
@@ -90,6 +92,13 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+            <!-- spring-doc API 注解（供 common/system 实体使用） -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-common</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
 
@@ -170,6 +179,20 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- X File Storage 文件存储-->
+            <dependency>
+                <groupId>org.dromara.x-file-storage</groupId>
+                <artifactId>x-file-storage-spring</artifactId>
+                <version>${x-file-storage.version}</version>
+            </dependency>
+
+            <!-- 阿里云OSS -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-oss}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -182,6 +205,15 @@
         <module>ruoyi-common</module>
     </modules>
     <packaging>pom</packaging>
+
+    <dependencies>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

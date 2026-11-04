@@ -10,6 +10,9 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.service.ISysDictDataService;
 import com.ruoyi.system.service.ISysDictTypeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +27,7 @@ import java.util.List;
  *
  * @author 棠野·Lysander
  */
+@Tag(name = "字典数据", description = "系统字典数据管理")
 @RestController
 @RequestMapping("/system/dict/data")
 public class SysDictDataController extends BaseController {
@@ -33,6 +37,7 @@ public class SysDictDataController extends BaseController {
     @Autowired
     private ISysDictTypeService dictTypeService;
 
+    @Operation(summary = "获取字典数据列表", description = "分页查询，按字典类型过滤")
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysDictData dictData) {
@@ -41,6 +46,7 @@ public class SysDictDataController extends BaseController {
         return getDataTable(list);
     }
 
+    @Operation(summary = "导出字典数据列表", description = "按查询条件导出字典数据 Excel")
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('system:dict:export')")
     @PostMapping("/export")
@@ -53,17 +59,21 @@ public class SysDictDataController extends BaseController {
     /**
      * 查询字典数据详细
      */
+    @Operation(summary = "获取字典数据详细信息")
     @PreAuthorize("@ss.hasPermi('system:dict:query')")
     @GetMapping(value = "/{dictCode}")
-    public AjaxResult getInfo(@PathVariable Long dictCode) {
+    public AjaxResult getInfo(
+            @Parameter(description = "字典数据编号", required = true) @PathVariable Long dictCode) {
         return success(dictDataService.selectDictDataById(dictCode));
     }
 
     /**
      * 根据字典类型查询字典数据信息
      */
+    @Operation(summary = "根据字典类型查询字典数据信息", description = "常用于前端下拉框取数")
     @GetMapping(value = "/type/{dictType}")
-    public AjaxResult dictType(@PathVariable String dictType) {
+    public AjaxResult dictType(
+            @Parameter(description = "字典类型键值", required = true) @PathVariable String dictType) {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
         if (StringUtils.isNull(data)) {
             data = new ArrayList<SysDictData>();
@@ -74,6 +84,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 新增字典类型
      */
+    @Operation(summary = "新增字典数据")
     @PreAuthorize("@ss.hasPermi('system:dict:add')")
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping
@@ -85,6 +96,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 修改保存字典类型
      */
+    @Operation(summary = "修改字典数据")
     @PreAuthorize("@ss.hasPermi('system:dict:edit')")
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -96,10 +108,12 @@ public class SysDictDataController extends BaseController {
     /**
      * 删除字典类型
      */
+    @Operation(summary = "删除字典数据", description = "支持批量，路径参数为逗号分隔的字典数据编号")
     @PreAuthorize("@ss.hasPermi('system:dict:remove')")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictCodes}")
-    public AjaxResult remove(@PathVariable Long[] dictCodes) {
+    public AjaxResult remove(
+            @Parameter(description = "字典数据编号集合", required = true) @PathVariable Long[] dictCodes) {
         dictDataService.deleteDictDataByIds(dictCodes);
         return success();
     }

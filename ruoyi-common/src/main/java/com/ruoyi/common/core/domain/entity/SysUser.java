@@ -9,6 +9,7 @@ import com.ruoyi.common.annotation.Excels;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.xss.Xss;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,6 +24,7 @@ import java.util.List;
  *
  * @author 棠野·Lysander
  */
+@Schema(description = "用户对象")
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -30,69 +32,81 @@ public class SysUser extends BaseEntity {
      * 用户ID
      */
     @Excel(name = "用户序号", type = Type.EXPORT, cellType = ColumnType.NUMERIC, prompt = "用户编号")
+    @Schema(description = "用户编号")
     private Long userId;
 
     /**
      * 部门ID
      */
     @Excel(name = "部门编号", type = Type.IMPORT)
+    @Schema(description = "部门编号")
     private Long deptId;
 
     /**
      * 用户账号
      */
     @Excel(name = "登录名称")
+    @Schema(description = "登录账号（列表查询条件）")
     private String userName;
 
     /**
      * 用户昵称
      */
     @Excel(name = "用户名称")
+    @Schema(description = "用户昵称（列表查询条件）")
     private String nickName;
 
     /**
      * 用户邮箱
      */
     @Excel(name = "用户邮箱")
+    @Schema(description = "邮箱")
     private String email;
 
     /**
      * 手机号码
      */
     @Excel(name = "手机号码", cellType = ColumnType.TEXT)
+    @Schema(description = "手机号码（列表查询条件）")
     private String phonenumber;
 
     /**
      * 用户性别
      */
     @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
+    @Schema(description = "性别（0男 1女 2未知）")
     private String sex;
 
     /**
      * 用户头像
      */
+    @Schema(description = "头像地址")
     private String avatar;
 
     /**
      * 密码
      */
+    @Schema(description = "密码（加密存储）")
     private String password;
 
     /**
      * 账号状态（0正常 1停用）
      */
     @Excel(name = "账号状态", readConverterExp = "0=正常,1=停用")
+    @Schema(description = "状态（0正常 1停用，列表查询条件）")
     private String status;
 
     /**
      * 删除标志（0代表存在 2代表删除）
      */
+    @Schema(description = "删除标志（0存在 2删除）")
     private String delFlag;
 
     /**
      * 最后登录IP
      */
     @Excel(name = "最后登录IP", type = Type.EXPORT)
+    @Schema(description = "最后登录 IP")
     private String loginIp;
 
     /**
@@ -124,16 +138,19 @@ public class SysUser extends BaseEntity {
     /**
      * 角色组
      */
+    @Schema(description = "角色编号集合")
     private Long[] roleIds;
 
     /**
      * 岗位组
      */
+    @Schema(description = "岗位编号集合")
     private Long[] postIds;
 
     /**
      * 角色ID
      */
+    @Schema(description = "角色编号（数据权限过滤用）")
     private Long roleId;
 
     public SysUser() {

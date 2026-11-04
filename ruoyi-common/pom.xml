@@ -29,6 +29,12 @@
             <artifactId>spring-web</artifactId>
         </dependency>
 
+        <!-- spring-doc API 注解 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-common</artifactId>
+        </dependency>
+
         <!-- spring security 安全认证 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

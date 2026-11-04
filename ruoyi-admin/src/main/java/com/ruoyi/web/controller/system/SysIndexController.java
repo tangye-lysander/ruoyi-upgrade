@@ -6,6 +6,8 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.service.ISysUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import java.util.Map;
  *
  * @author 棠野·Lysander
  */
+@Tag(name = "首页", description = "系统入口与锁屏")
 @RestController
 public class SysIndexController {
     /**
@@ -33,6 +36,7 @@ public class SysIndexController {
     /**
      * 访问首页，提示语
      */
+    @Operation(summary = "访问首页", description = "返回欢迎提示语")
     @RequestMapping("/")
     public String index() {
         return StringUtils.format("欢迎使用{}后台管理框架，当前版本：v{}，请通过前端地址访问。", ruoyiConfig.getName(), ruoyiConfig.getVersion());
@@ -41,6 +45,7 @@ public class SysIndexController {
     /**
      * 解锁屏幕
      */
+    @Operation(summary = "解锁屏幕", description = "请求体传 password 校验当前用户密码")
     @PostMapping("/unlockscreen")
     public AjaxResult unlockScreen(@RequestBody Map<String, String> body) {
         String password = body.get("password");

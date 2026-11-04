@@ -1,6 +1,7 @@
 package com.ruoyi.common.core.domain.entity;
 
 import com.ruoyi.common.core.domain.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,67 +17,80 @@ import java.util.List;
  *
  * @author 棠野·Lysander
  */
+@Schema(description = "部门对象")
 public class SysDept extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 部门ID
      */
+    @Schema(description = "部门编号")
     private Long deptId;
 
     /**
      * 父部门ID
      */
+    @Schema(description = "父部门编号")
     private Long parentId;
 
     /**
      * 祖级列表
      */
+    @Schema(description = "祖级部门编号列表（逗号分隔）")
     private String ancestors;
 
     /**
      * 部门名称
      */
+    @Schema(description = "部门名称（列表查询条件）")
     private String deptName;
 
     /**
      * 显示顺序
      */
+    @Schema(description = "显示顺序")
     private Integer orderNum;
 
     /**
      * 负责人
      */
+    @Schema(description = "负责人")
     private String leader;
 
     /**
      * 联系电话
      */
+    @Schema(description = "联系电话")
     private String phone;
 
     /**
      * 邮箱
      */
+    @Schema(description = "邮箱")
     private String email;
 
     /**
      * 部门状态:0正常,1停用
      */
+    @Schema(description = "状态（0正常 1停用，列表查询条件）")
     private String status;
 
     /**
      * 删除标志（0代表存在 2代表删除）
      */
+    @Schema(description = "删除标志（0存在 2删除）")
     private String delFlag;
 
     /**
      * 父部门名称
      */
+    @Schema(description = "父部门名称")
     private String parentName;
 
     /**
      * 子部门
      */
+    @Schema(description = "子部门列表")
     private List<SysDept> children = new ArrayList<SysDept>();
 
     public Long getDeptId() {

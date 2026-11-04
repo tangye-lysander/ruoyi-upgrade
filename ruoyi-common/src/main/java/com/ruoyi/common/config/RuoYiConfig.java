@@ -24,6 +24,10 @@ public class RuoYiConfig {
      */
     private static String captchaType;
     /**
+     * aliyun oss 配置
+     */
+    private static Oss oss;
+    /**
      * 项目名称
      */
     private String name;
@@ -58,6 +62,80 @@ public class RuoYiConfig {
 
     public void setCaptchaType(String captchaType) {
         RuoYiConfig.captchaType = captchaType;
+    }
+
+    public static Oss getOss() {
+        return oss;
+    }
+
+    public void setOss(Oss oss) {
+        RuoYiConfig.oss = oss;
+    }
+
+    /**
+     * aliyun OSS 相关配置
+     */
+    public static class Oss {
+        /**
+         * 端点
+         */
+        private String endpoint;
+        /**
+         * 存储桶名称
+         */
+        private String bucketName;
+        /**
+         * 区域
+         */
+        private String region;
+        /**
+         * AK 访问密钥
+         */
+        private String accessKey;
+        /**
+         * SK 密钥
+         */
+        private String secretKey;
+
+        public String getEndpoint() {
+            return endpoint;
+        }
+
+        public void setEndpoint(String endpoint) {
+            this.endpoint = endpoint;
+        }
+
+        public String getBucketName() {
+            return bucketName;
+        }
+
+        public void setBucketName(String bucketName) {
+            this.bucketName = bucketName;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public String getAccessKey() {
+            return accessKey;
+        }
+
+        public void setAccessKey(String accessKey) {
+            this.accessKey = accessKey;
+        }
+
+        public String getSecretKey() {
+            return secretKey;
+        }
+
+        public void setSecretKey(String secretKey) {
+            this.secretKey = secretKey;
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package com.ruoyi.common.core.domain.entity;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -14,6 +15,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author 棠野·Lysander
  */
+@Schema(description = "字典类型对象")
 public class SysDictType extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -21,24 +23,28 @@ public class SysDictType extends BaseEntity {
      * 字典主键
      */
     @Excel(name = "字典主键", cellType = ColumnType.NUMERIC)
+    @Schema(description = "字典类型编号")
     private Long dictId;
 
     /**
      * 字典名称
      */
     @Excel(name = "字典名称")
+    @Schema(description = "字典名称（列表查询条件）")
     private String dictName;
 
     /**
      * 字典类型
      */
     @Excel(name = "字典类型")
+    @Schema(description = "字典类型键值（列表查询条件）")
     private String dictType;
 
     /**
      * 状态（0正常 1停用）
      */
     @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
+    @Schema(description = "状态（0正常 1停用，列表查询条件）")
     private String status;
 
     public Long getDictId() {

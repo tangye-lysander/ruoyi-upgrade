@@ -3,6 +3,7 @@ package com.ruoyi.system.domain;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,6 +15,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author 棠野·Lysander
  */
+@Schema(description = "岗位对象")
 public class SysPost extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -21,30 +23,35 @@ public class SysPost extends BaseEntity {
      * 岗位序号
      */
     @Excel(name = "岗位序号", cellType = ColumnType.NUMERIC)
+    @Schema(description = "岗位编号")
     private Long postId;
 
     /**
      * 岗位编码
      */
     @Excel(name = "岗位编码")
+    @Schema(description = "岗位编码")
     private String postCode;
 
     /**
      * 岗位名称
      */
     @Excel(name = "岗位名称")
+    @Schema(description = "岗位名称（列表查询条件）")
     private String postName;
 
     /**
      * 岗位排序
      */
     @Excel(name = "岗位排序")
+    @Schema(description = "显示顺序")
     private Integer postSort;
 
     /**
      * 状态（0正常 1停用）
      */
     @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
+    @Schema(description = "状态（0正常 1停用，列表查询条件）")
     private String status;
 
     /**

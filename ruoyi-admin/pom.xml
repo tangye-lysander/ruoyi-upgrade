@@ -54,6 +54,18 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <!-- X File Storage 文件存储-->
+        <dependency>
+            <groupId>org.dromara.x-file-storage</groupId>
+            <artifactId>x-file-storage-spring</artifactId>
+        </dependency>
+
+        <!-- 阿里云OSS -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
