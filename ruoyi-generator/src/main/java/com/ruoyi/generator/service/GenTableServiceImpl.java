@@ -105,12 +105,13 @@ public class GenTableServiceImpl implements IGenTableService {
     /**
      * 查询据库列表
      *
+     * @param page     分页对象（page 传 null 则不分页）
      * @param genTable 业务信息
      * @return 数据库表集合
      */
     @Override
-    public List<GenTable> selectDbTableList(GenTable genTable) {
-        return genTableMapper.selectDbTableList(genTable);
+    public List<GenTable> selectDbTableList(IPage<GenTable> page, GenTable genTable) {
+        return genTableMapper.selectDbTableList(page, genTable);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.ruoyi.quartz.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.constant.ScheduleConstants;
 import com.ruoyi.common.exception.job.TaskException;
 import com.ruoyi.quartz.domain.SysJob;
@@ -49,8 +50,8 @@ public class SysJobServiceImpl implements ISysJobService {
      * @return
      */
     @Override
-    public List<SysJob> selectJobList(SysJob job) {
-        return jobMapper.selectJobList(job);
+    public List<SysJob> selectJobList(IPage<SysJob> page, SysJob job) {
+        return jobMapper.selectJobList(page, job);
     }
 
     /**

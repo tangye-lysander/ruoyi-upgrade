@@ -1,5 +1,6 @@
 package com.ruoyi.quartz.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -32,9 +33,9 @@ public class SysJobLogController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:job:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysJobLog sysJobLog) {
-        startPage();
-        List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
-        return getDataTable(list);
+        Page<SysJobLog> page = buildPage();
+        List<SysJobLog> list = jobLogService.selectJobLogList(page, sysJobLog);
+        return getDataTable(page, list);
     }
 
     /**
@@ -44,7 +45,7 @@ public class SysJobLogController extends BaseController {
     @Log(title = "任务调度日志", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJobLog sysJobLog) {
-        List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
+        List<SysJobLog> list = jobLogService.selectJobLogList(null, sysJobLog);
         ExcelUtil<SysJobLog> util = new ExcelUtil<SysJobLog>(SysJobLog.class);
         util.exportExcel(response, list, "调度日志");
     }

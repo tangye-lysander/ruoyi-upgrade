@@ -32,10 +32,11 @@ public interface IGenTableService {
     /**
      * 查询据库列表
      *
+     * @param page     分页对象（page 传 null 则不分页）
      * @param genTable 业务信息
      * @return 数据库表集合
      */
-    public List<GenTable> selectDbTableList(GenTable genTable);
+    public List<GenTable> selectDbTableList(IPage<GenTable> page, GenTable genTable);
 
     /**
      * 查询据库列表

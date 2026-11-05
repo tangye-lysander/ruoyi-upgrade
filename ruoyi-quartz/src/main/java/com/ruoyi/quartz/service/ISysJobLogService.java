@@ -1,5 +1,6 @@
 package com.ruoyi.quartz.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.quartz.domain.SysJobLog;
 
 import java.util.List;
@@ -13,10 +14,11 @@ public interface ISysJobLogService {
     /**
      * 获取quartz调度器日志的计划任务
      *
+     * @param page   分页对象（page 传 null 则不分页）
      * @param jobLog 调度日志信息
      * @return 调度任务日志集合
      */
-    public List<SysJobLog> selectJobLogList(SysJobLog jobLog);
+    public List<SysJobLog> selectJobLogList(IPage<SysJobLog> page, SysJobLog jobLog);
 
     /**
      * 通过调度任务日志ID查询调度信息

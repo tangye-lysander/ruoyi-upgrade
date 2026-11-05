@@ -1,5 +1,6 @@
 package com.ruoyi.quartz.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.quartz.domain.SysJobLog;
 import com.ruoyi.quartz.mapper.SysJobLogMapper;
 import com.ruoyi.quartz.service.ISysJobLogService;
@@ -25,8 +26,8 @@ public class SysJobLogServiceImpl implements ISysJobLogService {
      * @return 调度任务日志集合
      */
     @Override
-    public List<SysJobLog> selectJobLogList(SysJobLog jobLog) {
-        return jobLogMapper.selectJobLogList(jobLog);
+    public List<SysJobLog> selectJobLogList(IPage<SysJobLog> page, SysJobLog jobLog) {
+        return jobLogMapper.selectJobLogList(page, jobLog);
     }
 
     /**

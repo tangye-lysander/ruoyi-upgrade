@@ -1,5 +1,6 @@
 package com.ruoyi;
 
+import lombok.extern.slf4j.Slf4j;
 import org.dromara.x.file.storage.spring.EnableFileStorage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,11 +11,12 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  *
  * @author 棠野·Lysander
  */
+@Slf4j
 @EnableFileStorage
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class RuoYiApplication {
     public static void main(String[] args) {
         SpringApplication.run(RuoYiApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  若依启动成功   ლ(´ڡ`ლ)ﾞ");
+        log.info("(♥◠‿◠)ﾉﾞ  ruoyi启动成功   ლ(´ڡ`ლ)ﾞ");
     }
 }

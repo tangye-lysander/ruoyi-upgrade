@@ -137,12 +137,6 @@ mybatis-plus:
       # 更新策略 —— 只更新非 null 字段，避免误清空已有数据
       update-strategy: not_null
 
-# PageHelper分页插件
-pagehelper:
-  helperDialect: mysql
-  supportMethodsArguments: true
-  params: count=countSql
-
 # Springdoc配置
 springdoc:
   api-docs:

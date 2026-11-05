@@ -30,18 +30,6 @@ public class PageDomain {
      */
     private String isAsc = "asc";
 
-    /**
-     * 分页参数合理化
-     */
-    private Boolean reasonable = true;
-
-    public String getOrderBy() {
-        if (StringUtils.isEmpty(orderByColumn)) {
-            return "";
-        }
-        return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
-    }
-
     public void setIsAsc(String isAsc) {
         if (StringUtils.isNotEmpty(isAsc)) {
             // 兼容前端排序类型
@@ -52,12 +40,5 @@ public class PageDomain {
             }
             this.isAsc = isAsc;
         }
-    }
-
-    public Boolean getReasonable() {
-        if (StringUtils.isNull(reasonable)) {
-            return Boolean.TRUE;
-        }
-        return reasonable;
     }
 }

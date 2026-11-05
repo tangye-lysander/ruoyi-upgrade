@@ -1,5 +1,6 @@
 package com.ruoyi.quartz.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.controller.BaseController;
@@ -38,9 +39,9 @@ public class SysJobController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:job:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysJob sysJob) {
-        startPage();
-        List<SysJob> list = jobService.selectJobList(sysJob);
-        return getDataTable(list);
+        Page<SysJob> page = buildPage();
+        List<SysJob> list = jobService.selectJobList(page, sysJob);
+        return getDataTable(page, list);
     }
 
     /**
@@ -50,7 +51,7 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJob sysJob) {
-        List<SysJob> list = jobService.selectJobList(sysJob);
+        List<SysJob> list = jobService.selectJobList(null, sysJob);
         ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
         util.exportExcel(response, list, "定时任务");
     }

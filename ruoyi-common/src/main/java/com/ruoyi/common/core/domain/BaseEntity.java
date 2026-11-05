@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -29,6 +30,7 @@ public class BaseEntity implements Serializable {
      */
     @Schema(description = "搜索值")
     @JsonIgnore
+    @TableField(exist = false)
     private String searchValue;
 
     /**
@@ -68,6 +70,7 @@ public class BaseEntity implements Serializable {
      */
     @Schema(description = "请求参数集合（如 params[beginTime]、params[endTime] 用于时间范围过滤）")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @TableField(exist = false)
     private Map<String, Object> params;
 
     public Map<String, Object> getParams() {

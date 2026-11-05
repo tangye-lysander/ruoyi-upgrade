@@ -22,7 +22,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-@TableName("gen_table_column")
+@TableName(value = "gen_table_column", excludeProperty = {"remark"})
 public class GenTableColumn extends BaseEntity {
     private static final long serialVersionUID = 1L;
 

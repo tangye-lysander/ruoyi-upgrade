@@ -1,7 +1,9 @@
 package com.ruoyi.quartz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.quartz.domain.SysJob;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,10 +20,11 @@ public interface SysJobMapper extends BaseMapper<SysJob> {
     /**
      * 查询调度任务日志集合
      *
-     * @param job 调度信息
+     * @param page 分页对象（page 传 null 则不分页）
+     * @param job  调度信息
      * @return 操作日志集合
      */
-    public List<SysJob> selectJobList(SysJob job);
+    public List<SysJob> selectJobList(IPage<SysJob> page, @Param("job") SysJob job);
 
     /**
      * 查询所有调度任务

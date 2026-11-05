@@ -77,9 +77,9 @@ public class GenController extends BaseController {
     @PreAuthorize("@ss.hasPermi('tool:gen:list')")
     @GetMapping("/db/list")
     public TableDataInfo dataList(GenTable genTable) {
-        startPage();
-        List<GenTable> list = genTableService.selectDbTableList(genTable);
-        return getDataTable(list);
+        Page<GenTable> page = buildPage();
+        List<GenTable> list = genTableService.selectDbTableList(page, genTable);
+        return getDataTable(page, list);
     }
     /**
      * 查询数据表字段列表
