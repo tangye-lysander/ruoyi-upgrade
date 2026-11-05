@@ -27,7 +27,7 @@ java -jar ruoyi-admin/target/ruoyi-admin.jar
 
 ## 运行前提
 
-1. MySQL：执行 `sql/ry_sys.sql` 和 `sql/quartz.sql`，数据库名 `ry-vue`（见 `application-druid.yml`）。
+1. MySQL：执行 `.sql` 和 `.sql`，数据库名 `ry-vue`（见 `application-druid.yml`）。
 2. Redis：`localhost:6379`（见 `application.yml`），登录态、验证码、字典缓存、防重提交等全部依赖 Redis，不可用则启动失败。
 3. 应用端口 8080；API 文档在 `/swagger-ui.html`。
 
