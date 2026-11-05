@@ -54,6 +54,12 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <!-- 业务服务模块 -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-service</artifactId>
+        </dependency>
+
         <!-- X File Storage 文件存储-->
         <dependency>
             <groupId>org.dromara.x-file-storage</groupId>

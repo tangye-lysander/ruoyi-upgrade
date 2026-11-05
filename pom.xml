@@ -165,6 +165,13 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 业务服务模块 -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-service</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
             <!-- X File Storage 文件存储-->
             <dependency>
                 <groupId>org.dromara.x-file-storage</groupId>
@@ -197,6 +204,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-service</module>
     </modules>
     <packaging>pom</packaging>
 

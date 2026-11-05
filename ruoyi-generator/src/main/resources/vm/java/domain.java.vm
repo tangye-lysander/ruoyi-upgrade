@@ -3,13 +3,22 @@ package ${packageName}.domain;
 #foreach ($import in $importList)
 import ${import};
 #end
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.*;
+#if($table.sub)
+import com.baomidou.mybatisplus.annotation.TableField;
+#end
+#if($pkColumn.increment)
+import com.baomidou.mybatisplus.annotation.IdType;
+#end
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.Excel;
 #if($table.crud || $table.sub)
 import com.ruoyi.common.core.domain.BaseEntity;
 #elseif($table.tree)
 import com.ruoyi.common.core.domain.TreeEntity;
+
+import java.io.Serial;
 #end
 
 /**
@@ -23,8 +32,28 @@ import com.ruoyi.common.core.domain.TreeEntity;
 #elseif($table.tree)
 #set($Entity="TreeEntity")
 #end
-public class ${ClassName} extends ${Entity}
-{
+## 统计 BaseEntity 中表里实际不存在的审计字段：MyBatis-Plus 会把继承字段一并拼入 SQL，列不存在时需通过 excludeProperty 排除
+#set($superFields = ["createBy", "createTime", "updateBy", "updateTime", "remark"])
+#set($excludeList = [])
+#foreach($sf in $superFields)
+#set($found = false)
+#foreach($column in $columns)
+#if($column.javaField == $sf)#set($found = true)#end
+#end
+#if(!$found)#set($void = $excludeList.add($sf))#end
+#end
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+#if($excludeList.isEmpty())
+@TableName("${tableName}")
+#else
+@TableName(value = "${tableName}", excludeProperty = {#foreach($ef in $excludeList)"$ef"#if($foreach.count != $excludeList.size()), #end#end})
+#end
+public class ${ClassName} extends ${Entity}{
+    @Serial
     private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
@@ -46,60 +75,21 @@ public class ${ClassName} extends ${Entity}
     @Excel(name = "${comment}")
 #end
 #end
+#if($column.pk)
+#if($column.increment)
+    @TableId(value = "${column.columnName}", type = IdType.AUTO)
+#else
+    @TableId(value = "${column.columnName}")
+#end
+#end
     private $column.javaType $column.javaField;
 
 #end
 #end
 #if($table.sub)
     /** $table.subTable.functionName信息 */
+    @TableField(exist = false)
     private List<${subClassName}> ${subclassName}List;
 
 #end
-#foreach ($column in $columns)
-#if(!$table.isSuperColumn($column.javaField))
-#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
-#set($AttrName=$column.javaField)
-#else
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#end
-    public void set${AttrName}($column.javaType $column.javaField) 
-    {
-        this.$column.javaField = $column.javaField;
-    }
-
-    public $column.javaType get${AttrName}() 
-    {
-        return $column.javaField;
-    }
-
-#end
-#end
-#if($table.sub)
-    public List<${subClassName}> get${subClassName}List()
-    {
-        return ${subclassName}List;
-    }
-
-    public void set${subClassName}List(List<${subClassName}> ${subclassName}List)
-    {
-        this.${subclassName}List = ${subclassName}List;
-    }
-
-#end
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-#foreach ($column in $columns)
-#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
-#set($AttrName=$column.javaField)
-#else
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#end
-            .append("${column.javaField}", get${AttrName}())
-#end
-#if($table.sub)
-            .append("${subclassName}List", get${subClassName}List())
-#end
-            .toString();
-    }
 }

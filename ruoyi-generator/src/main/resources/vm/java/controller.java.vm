@@ -2,6 +2,7 @@ package ${packageName}.controller;
 
 import java.util.List;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,11 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date ${datetime}
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/${moduleName}/${businessName}")
-public class ${ClassName}Controller extends BaseController
-{
-    @Autowired
-    private I${ClassName}Service ${className}Service;
+public class ${ClassName}Controller extends BaseController {
+
+    private final I${ClassName}Service ${className}Service;
 
     /**
      * 查询${functionName}列表
@@ -44,15 +45,13 @@ public class ${ClassName}Controller extends BaseController
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:list')")
     @GetMapping("/list")
 #if($table.crud || $table.sub)
-    public TableDataInfo list(${ClassName} ${className})
-    {
+    public TableDataInfo list(${ClassName} ${className}) {
         Page<${ClassName}> page = buildPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(page, ${className});
         return getDataTable(page, list);
     }
 #elseif($table.tree)
-    public AjaxResult list(${ClassName} ${className})
-    {
+    public AjaxResult list(${ClassName} ${className}) {
         List<${ClassName}> list = ${className}Service.select${ClassName}List(null, ${className});
         return success(list);
     }
@@ -64,8 +63,7 @@ public class ${ClassName}Controller extends BaseController
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:export')")
     @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, ${ClassName} ${className})
-    {
+    public void export(HttpServletResponse response, ${ClassName} ${className}) {
         List<${ClassName}> list = ${className}Service.select${ClassName}List(null, ${className});
         ExcelUtil<${ClassName}> util = new ExcelUtil<${ClassName}>(${ClassName}.class);
         util.exportExcel(response, list, "${functionName}数据");
@@ -76,8 +74,7 @@ public class ${ClassName}Controller extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:query')")
     @GetMapping(value = "/{${pkColumn.javaField}}")
-    public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
-    {
+    public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
         return success(${className}Service.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));
     }
 
@@ -87,8 +84,7 @@ public class ${ClassName}Controller extends BaseController
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:add')")
     @Log(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ${ClassName} ${className})
-    {
+    public AjaxResult add(@RequestBody ${ClassName} ${className}) {
         return toAjax(${className}Service.insert${ClassName}(${className}));
     }
 
@@ -98,8 +94,7 @@ public class ${ClassName}Controller extends BaseController
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:edit')")
     @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody ${ClassName} ${className})
-    {
+    public AjaxResult edit(@RequestBody ${ClassName} ${className}) {
         return toAjax(${className}Service.update${ClassName}(${className}));
     }
 
@@ -109,8 +104,7 @@ public class ${ClassName}Controller extends BaseController
     @PreAuthorize("@ss.hasPermi('${permissionPrefix}:remove')")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{${pkColumn.javaField}s}")
-    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
-    {
+    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
         return toAjax(${className}Service.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s));
     }
 }

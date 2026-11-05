@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +22,9 @@ public class TreeEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 父菜单名称
+     * 父菜单名称（非数据库列，仅用于页面展示与回填）
      */
+    @TableField(exist = false)
     private String parentName;
 
     /**
@@ -41,7 +43,8 @@ public class TreeEntity extends BaseEntity {
     private String ancestors;
 
     /**
-     * 子部门
+     * 子部门（非数据库列，树结构组装用）
      */
+    @TableField(exist = false)
     private List<?> children = new ArrayList<>();
 }
