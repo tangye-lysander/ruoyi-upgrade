@@ -1,5 +1,6 @@
 package com.ruoyi.generator.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.generator.domain.GenTable;
 
 import java.util.List;
@@ -12,12 +13,21 @@ import java.util.Map;
  */
 public interface IGenTableService {
     /**
-     * 查询业务列表
+     * 查询业务列表（不分页）
      *
      * @param genTable 业务信息
      * @return 业务集合
      */
     public List<GenTable> selectGenTableList(GenTable genTable);
+
+    /**
+     * 分页查询业务列表
+     *
+     * @param page     分页对象
+     * @param genTable 业务信息
+     * @return 业务集合
+     */
+    public List<GenTable> selectGenTableList(IPage<GenTable> page, GenTable genTable);
 
     /**
      * 查询据库列表

@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
@@ -32,7 +33,19 @@ public class SysPostServiceImpl implements ISysPostService {
      */
     @Override
     public List<SysPost> selectPostList(SysPost post) {
-        return postMapper.selectPostList(post);
+        return postMapper.selectPostPage(null, post);
+    }
+
+    /**
+     * 分页查询岗位信息集合（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象
+     * @param post 岗位信息
+     * @return 岗位信息集合
+     */
+    @Override
+    public List<SysPost> selectPostList(IPage<SysPost> page, SysPost post) {
+        return postMapper.selectPostPage(page, post);
     }
 
     /**

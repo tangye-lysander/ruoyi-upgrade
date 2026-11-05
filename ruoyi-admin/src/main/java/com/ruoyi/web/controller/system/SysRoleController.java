@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -50,9 +51,9 @@ public class SysRoleController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:role:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysRole role) {
-        startPage();
-        List<SysRole> list = roleService.selectRoleList(role);
-        return getDataTable(list);
+        Page<SysRole> page = buildPage();
+        List<SysRole> list = roleService.selectRoleList(page, role);
+        return getDataTable(page, list);
     }
 
     @Operation(summary = "导出角色列表", description = "按查询条件导出角色数据 Excel")
@@ -176,9 +177,9 @@ public class SysRoleController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:role:list')")
     @GetMapping("/authUser/allocatedList")
     public TableDataInfo allocatedList(SysUser user) {
-        startPage();
-        List<SysUser> list = userService.selectAllocatedList(user);
-        return getDataTable(list);
+        Page<SysUser> page = buildPage();
+        List<SysUser> list = userService.selectAllocatedList(page, user);
+        return getDataTable(page, list);
     }
 
     /**
@@ -188,9 +189,9 @@ public class SysRoleController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:role:list')")
     @GetMapping("/authUser/unallocatedList")
     public TableDataInfo unallocatedList(SysUser user) {
-        startPage();
-        List<SysUser> list = userService.selectUnallocatedList(user);
-        return getDataTable(list);
+        Page<SysUser> page = buildPage();
+        List<SysUser> list = userService.selectUnallocatedList(page, user);
+        return getDataTable(page, list);
     }
 
     /**

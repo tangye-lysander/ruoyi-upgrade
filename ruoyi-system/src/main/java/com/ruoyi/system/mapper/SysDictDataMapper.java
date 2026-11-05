@@ -1,5 +1,6 @@
 package com.ruoyi.system.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,12 +13,13 @@ import java.util.List;
  */
 public interface SysDictDataMapper {
     /**
-     * 根据条件分页查询字典数据
+     * 根据条件查询字典数据（分页由 MyBatis-Plus 插件处理，page 传 null 则不分页）
      *
+     * @param page     分页对象
      * @param dictData 字典数据信息
      * @return 字典数据集合信息
      */
-    public List<SysDictData> selectDictDataList(SysDictData dictData);
+    public List<SysDictData> selectDictDataPage(IPage<SysDictData> page, @Param("dictData") SysDictData dictData);
 
     /**
      * 根据字典类型查询字典数据

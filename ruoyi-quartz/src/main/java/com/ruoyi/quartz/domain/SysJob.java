@@ -1,5 +1,8 @@
 package com.ruoyi.quartz.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
@@ -25,12 +28,18 @@ import java.util.Date;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@TableName("sys_job")
 public class SysJob extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 任务ID
+     * <p>
+     * sys_job 的物理主键是 (job_id, job_name, job_group) 复合主键，
+     * MyBatis-Plus 仅支持单列主键，这里以自增的 job_id 作为逻辑主键，
+     * 因此本表相关语句仍走 SysJobMapper.xml 中的自定义 SQL，不使用内置 CRUD 方法。
      */
+    @TableId(value = "job_id", type = IdType.AUTO)
     @Excel(name = "任务序号", cellType = ColumnType.NUMERIC)
     private Long jobId;
 

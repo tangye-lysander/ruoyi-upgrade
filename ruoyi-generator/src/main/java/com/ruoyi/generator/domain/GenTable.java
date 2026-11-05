@@ -1,5 +1,10 @@
 package com.ruoyi.generator.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.constant.GenConstants;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.utils.StringUtils;
@@ -22,12 +27,14 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
+@TableName("gen_table")
 public class GenTable extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 编号
      */
+    @TableId(value = "table_id", type = IdType.AUTO)
     private Long tableId;
 
     /**
@@ -44,12 +51,17 @@ public class GenTable extends BaseEntity {
 
     /**
      * 关联父表的表名
+     * <p>
+     * updateStrategy = ALWAYS：取消关联子表时需要把该列写回 null，
+     * 与原 XML「只要入参非 null（含空串）就更新」的行为保持一致。
      */
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private String subTableName;
 
     /**
      * 本表关联父表的外键名
      */
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private String subTableFkName;
 
     /**
@@ -114,19 +126,22 @@ public class GenTable extends BaseEntity {
     private String genPath;
 
     /**
-     * 主键信息
+     * 主键信息（由关联查询组装，非 gen_table 列）
      */
+    @TableField(exist = false)
     private GenTableColumn pkColumn;
 
     /**
-     * 子表信息
+     * 子表信息（由关联查询组装，非 gen_table 列）
      */
+    @TableField(exist = false)
     private GenTable subTable;
 
     /**
-     * 表列信息
+     * 表列信息（由关联查询组装，非 gen_table 列）
      */
     @Valid
+    @TableField(exist = false)
     private List<GenTableColumn> columns;
 
     /**
@@ -135,33 +150,39 @@ public class GenTable extends BaseEntity {
     private String options;
 
     /**
-     * 树编码字段
+     * 树编码字段（存放在 options 中，非 gen_table 列）
      */
+    @TableField(exist = false)
     private String treeCode;
 
     /**
-     * 树父编码字段
+     * 树父编码字段（存放在 options 中，非 gen_table 列）
      */
+    @TableField(exist = false)
     private String treeParentCode;
 
     /**
-     * 树名称字段
+     * 树名称字段（存放在 options 中，非 gen_table 列）
      */
+    @TableField(exist = false)
     private String treeName;
 
     /**
-     * 上级菜单ID字段
+     * 上级菜单ID字段（存放在 options 中，非 gen_table 列）
      */
+    @TableField(exist = false)
     private Long parentMenuId;
 
     /**
-     * 上级菜单名称字段
+     * 上级菜单名称字段（存放在 options 中，非 gen_table 列）
      */
+    @TableField(exist = false)
     private String parentMenuName;
 
     /**
-     * 是否生成详情页
+     * 是否生成详情页（存放在 options 中，非 gen_table 列）
      */
+    @TableField(exist = false)
     private boolean isView;
 
     public static boolean isSub(String tplCategory) {

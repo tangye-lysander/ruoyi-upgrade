@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.generator.mapper.GenTableMapper">
-    <resultMap type="GenTable" id="GenTableResult">
+    <resultMap type="com.ruoyi.generator.domain.GenTable" id="GenTableResult">
         <id property="tableId" column="table_id"/>
         <result property="tableName" column="table_name"/>
         <result property="tableComment" column="table_comment"/>
@@ -29,7 +29,7 @@
         <collection property="columns" javaType="java.util.List" resultMap="GenTableColumnResult"/>
     </resultMap>
 
-    <resultMap type="GenTableColumn" id="GenTableColumnResult">
+    <resultMap type="com.ruoyi.generator.domain.GenTableColumn" id="GenTableColumnResult">
         <id property="columnId" column="column_id"/>
         <result property="tableId" column="table_id"/>
         <result property="columnName" column="column_name"/>
@@ -80,24 +80,25 @@
         from gen_table
     </sql>
 
-    <select id="selectGenTableList" parameterType="GenTable" resultMap="GenTableResult">
+    <select id="selectGenTableList" resultMap="GenTableResult">
         <include refid="selectGenTableVo"/>
         <where>
-            <if test="tableName != null and tableName != ''">
-                AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
+            <if test="genTable.tableName != null and genTable.tableName != ''">
+                AND lower(table_name) like lower(concat('%', #{genTable.tableName}, '%'))
             </if>
-            <if test="tableComment != null and tableComment != ''">
-                AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
+            <if test="genTable.tableComment != null and genTable.tableComment != ''">
+                AND lower(table_comment) like lower(concat('%', #{genTable.tableComment}, '%'))
             </if>
-            <if test="params.beginTime != null and params.beginTime != ''">
+            <if test="genTable.params.beginTime != null and genTable.params.beginTime != ''">
                 <!-- 开始时间检索 -->
-                AND date_format(create_time,'%Y%m%d') &gt;= date_format(#{params.beginTime},'%Y%m%d')
+                AND date_format(create_time,'%Y%m%d') &gt;= date_format(#{genTable.params.beginTime},'%Y%m%d')
             </if>
-            <if test="params.endTime != null and params.endTime != ''">
+            <if test="genTable.params.endTime != null and genTable.params.endTime != ''">
                 <!-- 结束时间检索 -->
-                AND date_format(create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
+                AND date_format(create_time,'%Y%m%d') &lt;= date_format(#{genTable.params.endTime},'%Y%m%d')
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectDbTableList" parameterType="GenTable" resultMap="GenTableResult">
@@ -198,174 +199,7 @@
         order by c.sort
     </select>
 
-    <insert id="insertGenTable" parameterType="GenTable" useGeneratedKeys="true" keyProperty="tableId">
-        insert into gen_table (
-        <if test="tableName != null">
-            table_name,
-        </if>
-        <if test="tableComment != null and tableComment != ''">
-            table_comment,
-        </if>
-        <if test="className != null and className != ''">
-            class_name,
-        </if>
-        <if test="tplCategory != null and tplCategory != ''">
-            tpl_category,
-        </if>
-        <if test="tplWebType != null and tplWebType != ''">
-            tpl_web_type,
-        </if>
-        <if test="packageName != null and packageName != ''">
-            package_name,
-        </if>
-        <if test="moduleName != null and moduleName != ''">
-            module_name,
-        </if>
-        <if test="businessName != null and businessName != ''">
-            business_name,
-        </if>
-        <if test="functionName != null and functionName != ''">
-            function_name,
-        </if>
-        <if test="functionAuthor != null and functionAuthor != ''">
-            function_author,
-        </if>
-        <if test="formColNum != null">
-            form_col_num,
-        </if>
-        <if test="genType != null and genType != ''">
-            gen_type,
-        </if>
-        <if test="genPath != null and genPath != ''">
-            gen_path,
-        </if>
-        <if test="remark != null and remark != ''">
-            remark,
-        </if>
-        <if test="createBy != null and createBy != ''">
-            create_by,
-        </if>
-        create_time
-        )values(
-        <if test="tableName != null">
-            #{tableName},
-        </if>
-        <if test="tableComment != null and tableComment != ''">
-            #{tableComment},
-        </if>
-        <if test="className != null and className != ''">
-            #{className},
-        </if>
-        <if test="tplCategory != null and tplCategory != ''">
-            #{tplCategory},
-        </if>
-        <if test="tplWebType != null and tplWebType != ''">
-            #{tplWebType},
-        </if>
-        <if test="packageName != null and packageName != ''">
-            #{packageName},
-        </if>
-        <if test="moduleName != null and moduleName != ''">
-            #{moduleName},
-        </if>
-        <if test="businessName != null and businessName != ''">
-            #{businessName},
-        </if>
-        <if test="functionName != null and functionName != ''">
-            #{functionName},
-        </if>
-        <if test="functionAuthor != null and functionAuthor != ''">
-            #{functionAuthor},
-        </if>
-        <if test="formColNum != null">
-            #{formColNum},
-        </if>
-        <if test="genType != null and genType != ''">
-            #{genType},
-        </if>
-        <if test="genPath != null and genPath != ''">
-            #{genPath},
-        </if>
-        <if test="remark != null and remark != ''">
-            #{remark},
-        </if>
-        <if test="createBy != null and createBy != ''">
-            #{createBy},
-        </if>
-        sysdate()
-        )
-    </insert>
-
     <update id="createTable">
         ${sql}
     </update>
-
-    <update id="updateGenTable" parameterType="GenTable">
-        update gen_table
-        <set>
-            <if test="tableName != null">
-                table_name = #{tableName},
-            </if>
-            <if test="tableComment != null and tableComment != ''">
-                table_comment = #{tableComment},
-            </if>
-            <if test="subTableName != null">
-                sub_table_name = #{subTableName},
-            </if>
-            <if test="subTableFkName != null">
-                sub_table_fk_name = #{subTableFkName},
-            </if>
-            <if test="className != null and className != ''">
-                class_name = #{className},
-            </if>
-            <if test="functionAuthor != null and functionAuthor != ''">
-                function_author = #{functionAuthor},
-            </if>
-            <if test="formColNum != null">
-                form_col_num = #{formColNum},
-            </if>
-            <if test="genType != null and genType != ''">
-                gen_type = #{genType},
-            </if>
-            <if test="genPath != null and genPath != ''">
-                gen_path = #{genPath},
-            </if>
-            <if test="tplCategory != null and tplCategory != ''">
-                tpl_category = #{tplCategory},
-            </if>
-            <if test="tplWebType != null and tplWebType != ''">
-                tpl_web_type = #{tplWebType},
-            </if>
-            <if test="packageName != null and packageName != ''">
-                package_name = #{packageName},
-            </if>
-            <if test="moduleName != null and moduleName != ''">
-                module_name = #{moduleName},
-            </if>
-            <if test="businessName != null and businessName != ''">
-                business_name = #{businessName},
-            </if>
-            <if test="functionName != null and functionName != ''">
-                function_name = #{functionName},
-            </if>
-            <if test="options != null and options != ''">
-                options = #{options},
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
-            </if>
-            <if test="remark != null">
-                remark = #{remark},
-            </if>
-            update_time = sysdate()
-        </set>
-        where table_id = #{tableId}
-    </update>
-
-    <delete id="deleteGenTableByIds" parameterType="Long">
-        delete from gen_table where table_id in
-        <foreach collection="array" item="tableId" open="(" separator="," close=")">
-            #{tableId}
-        </foreach>
-    </delete>
 </mapper>

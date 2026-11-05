@@ -1,5 +1,7 @@
 package com.ruoyi.common.core.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.constant.HttpStatus;
@@ -52,6 +54,13 @@ public class BaseController {
     }
 
     /**
+     * 构建 MyBatis-Plus 分页对象（读取请求分页与排序参数）
+     */
+    protected <T> Page<T> buildPage() {
+        return PageUtils.buildPage();
+    }
+
+    /**
      * 设置请求排序数据
      */
     protected void startOrderBy() {
@@ -79,6 +88,21 @@ public class BaseController {
         rspData.setMsg("查询成功");
         rspData.setRows(list);
         rspData.setTotal(new PageInfo(list).getTotal());
+        return rspData;
+    }
+
+    /**
+     * 响应请求分页数据（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象（total 已由分页插件回填）
+     * @param list 当前页数据
+     */
+    protected TableDataInfo getDataTable(IPage<?> page, List<?> list) {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(HttpStatus.SUCCESS);
+        rspData.setMsg("查询成功");
+        rspData.setRows(list);
+        rspData.setTotal(page.getTotal());
         return rspData;
     }
 

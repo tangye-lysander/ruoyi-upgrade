@@ -110,14 +110,32 @@ token:
   # 令牌有效期（分钟）
   expireTime: 40320
 
-# MyBatis配置
-mybatis:
+# MyBatis Plus配置
+mybatis-plus:
   # 搜索指定包别名
   typeAliasesPackage: com.ruoyi.**.domain
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mapper/**/*Mapper.xml
-  # 加载全局的配置文件
-  configLocation: classpath:mybatis/mybatis-config.xml
+  # MyBatis 配置项
+  configuration:
+    # 开启下划线映射
+    map-underscore-to-camel-case: true
+    # 调用 setter 处理 null 值，避免部分字段结果映射丢失
+    call-setters-on-nulls: true
+    # 允许 JDBC 支持自动生成主键
+    use-generated-keys: true
+    # 指定 MyBatis 所用日志的具体实现
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 全局配置项
+  global-config:
+    # 关闭 banner
+#    banner: false
+    # 逻辑删除配置项
+    db-config:
+      # 主键生成策略
+      id-type: auto
+      # 更新策略 —— 只更新非 null 字段，避免误清空已有数据
+      update-strategy: not_null
 
 # PageHelper分页插件
 pagehelper:

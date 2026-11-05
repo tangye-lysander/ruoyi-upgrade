@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.system.domain.SysOperLog;
 
 import java.util.List;
@@ -24,6 +25,15 @@ public interface ISysOperLogService {
      * @return 操作日志集合
      */
     public List<SysOperLog> selectOperLogList(SysOperLog operLog);
+
+    /**
+     * 分页查询系统操作日志集合（MyBatis-Plus 分页）
+     *
+     * @param page    分页对象
+     * @param operLog 操作日志对象
+     * @return 操作日志集合
+     */
+    public List<SysOperLog> selectOperLogList(IPage<SysOperLog> page, SysOperLog operLog);
 
     /**
      * 批量删除系统操作日志

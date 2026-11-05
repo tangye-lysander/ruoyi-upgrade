@@ -1,11 +1,13 @@
 package com.ruoyi.generator.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.mapper.GenTableColumnMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +28,9 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      */
     @Override
     public List<GenTableColumn> selectGenTableColumnListByTableId(Long tableId) {
-        return genTableColumnMapper.selectGenTableColumnListByTableId(tableId);
+        return genTableColumnMapper.selectList(new LambdaQueryWrapper<GenTableColumn>()
+                .eq(GenTableColumn::getTableId, tableId)
+                .orderByAsc(GenTableColumn::getSort));
     }
 
     /**
@@ -37,7 +41,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      */
     @Override
     public int insertGenTableColumn(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.insertGenTableColumn(genTableColumn);
+        return genTableColumnMapper.insert(genTableColumn);
     }
 
     /**
@@ -48,7 +52,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      */
     @Override
     public int updateGenTableColumn(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.updateGenTableColumn(genTableColumn);
+        return genTableColumnMapper.updateById(genTableColumn);
     }
 
     /**
@@ -59,6 +63,6 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      */
     @Override
     public int deleteGenTableColumnByIds(String ids) {
-        return genTableColumnMapper.deleteGenTableColumnByIds(Convert.toLongArray(ids));
+        return genTableColumnMapper.deleteByIds(Arrays.asList(Convert.toLongArray(ids)));
     }
 }

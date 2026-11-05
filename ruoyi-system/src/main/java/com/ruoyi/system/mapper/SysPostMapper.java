@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.system.domain.SysPost;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,12 +13,13 @@ import java.util.List;
  */
 public interface SysPostMapper {
     /**
-     * 查询岗位数据集合
+     * 查询岗位数据集合（分页由 MyBatis-Plus 插件处理，page 传 null 则不分页）
      *
+     * @param page 分页对象
      * @param post 岗位信息
      * @return 岗位数据集合
      */
-    public List<SysPost> selectPostList(SysPost post);
+    public List<SysPost> selectPostPage(IPage<SysPost> page, @Param("post") SysPost post);
 
     /**
      * 查询所有岗位

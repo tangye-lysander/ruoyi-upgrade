@@ -4,6 +4,7 @@ import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlCreateTableStatement;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -49,9 +50,9 @@ public class GenController extends BaseController {
     @PreAuthorize("@ss.hasPermi('tool:gen:list')")
     @GetMapping("/list")
     public TableDataInfo genList(GenTable genTable) {
-        startPage();
-        List<GenTable> list = genTableService.selectGenTableList(genTable);
-        return getDataTable(list);
+        Page<GenTable> page = buildPage();
+        List<GenTable> list = genTableService.selectGenTableList(page, genTable);
+        return getDataTable(page, list);
     }
 
     /**
@@ -80,7 +81,6 @@ public class GenController extends BaseController {
         List<GenTable> list = genTableService.selectDbTableList(genTable);
         return getDataTable(list);
     }
-
     /**
      * 查询数据表字段列表
      */

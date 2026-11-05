@@ -1,5 +1,8 @@
 package com.ruoyi.quartz.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -19,12 +22,14 @@ import java.util.Date;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@TableName("sys_job_log")
 public class SysJobLog extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * ID
      */
+    @TableId(value = "job_log_id", type = IdType.AUTO)
     @Excel(name = "日志序号")
     private Long jobLogId;
 

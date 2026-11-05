@@ -1,5 +1,6 @@
 package com.ruoyi.system.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,28 +14,31 @@ import java.util.List;
  */
 public interface SysUserMapper {
     /**
-     * 根据条件分页查询用户列表
+     * 根据条件查询用户列表（分页由 MyBatis-Plus 插件处理，page 传 null 则不分页）
      *
+     * @param page   分页对象
      * @param sysUser 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUserList(SysUser sysUser);
+    public List<SysUser> selectUserPage(IPage<SysUser> page, @Param("user") SysUser sysUser);
 
     /**
-     * 根据条件分页查询已配用户角色列表
+     * 根据条件查询已配用户角色列表（分页由 MyBatis-Plus 插件处理，page 传 null 则不分页）
      *
+     * @param page 分页对象
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectAllocatedList(SysUser user);
+    public List<SysUser> selectAllocatedPage(IPage<SysUser> page, @Param("user") SysUser user);
 
     /**
-     * 根据条件分页查询未分配用户角色列表
+     * 根据条件查询未分配用户角色列表（分页由 MyBatis-Plus 插件处理，page 传 null 则不分页）
      *
+     * @param page 分页对象
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUnallocatedList(SysUser user);
+    public List<SysUser> selectUnallocatedPage(IPage<SysUser> page, @Param("user") SysUser user);
 
     /**
      * 通过用户名查询用户

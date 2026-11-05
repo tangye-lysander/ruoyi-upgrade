@@ -1,5 +1,7 @@
 package com.ruoyi.common.utils;
 
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.core.page.TableSupport;
@@ -28,5 +30,22 @@ public class PageUtils extends PageHelper {
      */
     public static void clearPage() {
         PageHelper.clearPage();
+    }
+
+    /**
+     * 构建 MyBatis-Plus 分页对象（从请求参数读取分页与排序信息）
+     */
+    public static <T> Page<T> buildPage() {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        Page<T> page = new Page<>(pageDomain.getPageNum(), pageDomain.getPageSize());
+        if (StringUtils.isNotEmpty(pageDomain.getOrderByColumn())) {
+            String column = SqlUtil.escapeOrderBySql(StringUtils.toUnderScoreCase(pageDomain.getOrderByColumn()));
+            if ("desc".equals(pageDomain.getIsAsc())) {
+                page.addOrder(OrderItem.desc(column));
+            } else {
+                page.addOrder(OrderItem.asc(column));
+            }
+        }
+        return page;
     }
 }

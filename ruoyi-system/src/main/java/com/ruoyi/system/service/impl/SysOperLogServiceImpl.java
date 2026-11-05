@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.system.domain.SysOperLog;
 import com.ruoyi.system.mapper.SysOperLogMapper;
 import com.ruoyi.system.service.ISysOperLogService;
@@ -36,7 +37,19 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      */
     @Override
     public List<SysOperLog> selectOperLogList(SysOperLog operLog) {
-        return operLogMapper.selectOperLogList(operLog);
+        return operLogMapper.selectOperLogPage(null, operLog);
+    }
+
+    /**
+     * 分页查询系统操作日志集合（MyBatis-Plus 分页）
+     *
+     * @param page    分页对象
+     * @param operLog 操作日志对象
+     * @return 操作日志集合
+     */
+    @Override
+    public List<SysOperLog> selectOperLogList(IPage<SysOperLog> page, SysOperLog operLog) {
+        return operLogMapper.selectOperLogPage(page, operLog);
     }
 
     /**

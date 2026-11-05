@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.core.domain.entity.SysRole;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,12 +13,13 @@ import java.util.List;
  */
 public interface SysRoleMapper {
     /**
-     * 根据条件分页查询角色数据
+     * 根据条件查询角色数据（分页由 MyBatis-Plus 插件处理，page 传 null 则不分页）
      *
+     * @param page 分页对象
      * @param role 角色信息
      * @return 角色数据集合信息
      */
-    public List<SysRole> selectRoleList(SysRole role);
+    public List<SysRole> selectRolePage(IPage<SysRole> page, @Param("role") SysRole role);
 
     /**
      * 根据用户ID查询角色

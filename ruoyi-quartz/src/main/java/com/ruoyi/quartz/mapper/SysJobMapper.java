@@ -1,15 +1,20 @@
 package com.ruoyi.quartz.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.quartz.domain.SysJob;
 
 import java.util.List;
 
 /**
  * 调度任务信息 数据层
+ * <p>
+ * sys_job 的物理主键是 (job_id, job_name, job_group) 复合主键，MyBatis-Plus 只支持单列主键，
+ * 因此本表的全部语句仍走 XML 自定义 SQL；继承 BaseMapper 仅为统一数据层形态并提供
+ * selectCount / Wrapper 查询等附加能力。
  *
  * @author 棠野·Lysander
  */
-public interface SysJobMapper {
+public interface SysJobMapper extends BaseMapper<SysJob> {
     /**
      * 查询调度任务日志集合
      *

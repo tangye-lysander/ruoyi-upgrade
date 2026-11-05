@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.monitor;
 
 import com.ruoyi.common.annotation.Log;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -37,9 +38,9 @@ public class SysLogininforController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysLogininfor logininfor) {
-        startPage();
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
-        return getDataTable(list);
+        Page<SysLogininfor> page = buildPage();
+        List<SysLogininfor> list = logininforService.selectLogininforList(page, logininfor);
+        return getDataTable(page, list);
     }
 
     @Operation(summary = "导出登录日志列表", description = "按查询条件导出登录日志 Excel")

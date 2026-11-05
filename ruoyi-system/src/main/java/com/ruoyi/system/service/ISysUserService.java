@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.core.domain.entity.SysUser;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface ISysUserService {
     /**
-     * 根据条件分页查询用户列表
+     * 根据条件查询用户列表
      *
      * @param user 用户信息
      * @return 用户信息集合信息
@@ -20,7 +21,16 @@ public interface ISysUserService {
     public List<SysUser> selectUserList(SysUser user);
 
     /**
-     * 根据条件分页查询已分配用户角色列表
+     * 分页查询用户列表（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    public List<SysUser> selectUserList(IPage<SysUser> page, SysUser user);
+
+    /**
+     * 根据条件查询已分配用户角色列表
      *
      * @param user 用户信息
      * @return 用户信息集合信息
@@ -28,12 +38,30 @@ public interface ISysUserService {
     public List<SysUser> selectAllocatedList(SysUser user);
 
     /**
-     * 根据条件分页查询未分配用户角色列表
+     * 分页查询已分配用户角色列表（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    public List<SysUser> selectAllocatedList(IPage<SysUser> page, SysUser user);
+
+    /**
+     * 根据条件查询未分配用户角色列表
      *
      * @param user 用户信息
      * @return 用户信息集合信息
      */
     public List<SysUser> selectUnallocatedList(SysUser user);
+
+    /**
+     * 分页查询未分配用户角色列表（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    public List<SysUser> selectUnallocatedList(IPage<SysUser> page, SysUser user);
 
     /**
      * 通过用户名查询用户

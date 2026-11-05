@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.system;
 
 import com.ruoyi.common.annotation.Log;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -38,9 +39,9 @@ public class SysPostController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:post:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysPost post) {
-        startPage();
-        List<SysPost> list = postService.selectPostList(post);
-        return getDataTable(list);
+        Page<SysPost> page = buildPage();
+        List<SysPost> list = postService.selectPostList(page, post);
+        return getDataTable(page, list);
     }
 
     @Operation(summary = "导出岗位列表", description = "按查询条件导出岗位数据 Excel")

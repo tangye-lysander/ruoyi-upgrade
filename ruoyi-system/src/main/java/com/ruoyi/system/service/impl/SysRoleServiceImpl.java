@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysRole;
@@ -38,7 +39,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     private final SysRoleDeptMapper roleDeptMapper;
 
     /**
-     * 根据条件分页查询角色数据
+     * 根据条件查询角色数据
      *
      * @param role 角色信息
      * @return 角色数据集合信息
@@ -46,7 +47,20 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     @DataScope(deptAlias = "d")
     public List<SysRole> selectRoleList(SysRole role) {
-        return roleMapper.selectRoleList(role);
+        return roleMapper.selectRolePage(null, role);
+    }
+
+    /**
+     * 分页查询角色数据（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象
+     * @param role 角色信息
+     * @return 角色数据集合信息
+     */
+    @Override
+    @DataScope(deptAlias = "d")
+    public List<SysRole> selectRoleList(IPage<SysRole> page, SysRole role) {
+        return roleMapper.selectRolePage(page, role);
     }
 
     /**

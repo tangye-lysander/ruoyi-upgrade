@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.redis.RedisCache;
@@ -93,7 +94,19 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @Override
     public List<SysConfig> selectConfigList(SysConfig config) {
-        return configMapper.selectConfigList(config);
+        return configMapper.selectConfigPage(null, config);
+    }
+
+    /**
+     * 分页查询参数配置列表（MyBatis-Plus 分页）
+     *
+     * @param page   分页对象
+     * @param config 参数配置信息
+     * @return 参数配置集合
+     */
+    @Override
+    public List<SysConfig> selectConfigList(IPage<SysConfig> page, SysConfig config) {
+        return configMapper.selectConfigPage(page, config);
     }
 
     /**
@@ -153,7 +166,7 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @Override
     public void loadingConfigCache() {
-        List<SysConfig> configsList = configMapper.selectConfigList(new SysConfig());
+        List<SysConfig> configsList = configMapper.selectConfigPage(null, new SysConfig());
         for (SysConfig config : configsList) {
             redisCache.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());
         }

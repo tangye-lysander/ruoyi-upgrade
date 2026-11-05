@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.system.domain.SysNotice;
 import com.ruoyi.system.domain.SysNoticeRead;
 import com.ruoyi.system.mapper.SysNoticeReadMapper;
@@ -59,11 +60,11 @@ public class SysNoticeReadServiceImpl implements ISysNoticeReadService {
     }
 
     /**
-     * 查询已阅读某公告的用户列表
+     * 查询已阅读某公告的用户列表（分页由 MyBatis-Plus 插件处理）
      */
     @Override
-    public List<Map<String, Object>> selectReadUsersByNoticeId(Long noticeId, String searchValue) {
-        return noticeReadMapper.selectReadUsersByNoticeId(noticeId, searchValue);
+    public List<Map<String, Object>> selectReadUsersByNoticeId(IPage<Map<String, Object>> page, Long noticeId, String searchValue) {
+        return noticeReadMapper.selectReadUsersByNoticeId(page, noticeId, searchValue);
     }
 
     /**

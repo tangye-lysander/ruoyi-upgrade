@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.system;
 
 import com.ruoyi.common.annotation.Log;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -18,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 公告 信息操作处理
@@ -40,9 +42,9 @@ public class SysNoticeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:notice:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysNotice notice) {
-        startPage();
-        List<SysNotice> list = noticeService.selectNoticeList(notice);
-        return getDataTable(list);
+        Page<SysNotice> page = buildPage();
+        List<SysNotice> list = noticeService.selectNoticeList(page, notice);
+        return getDataTable(page, list);
     }
 
     /**
@@ -131,9 +133,9 @@ public class SysNoticeController extends BaseController {
     public TableDataInfo readUsersList(
             @Parameter(description = "公告编号", required = true) Long noticeId,
             @Parameter(description = "搜索关键词（用户名/昵称）") String searchValue) {
-        startPage();
-        List<?> list = noticeReadService.selectReadUsersByNoticeId(noticeId, searchValue);
-        return getDataTable(list);
+        Page<Map<String, Object>> page = buildPage();
+        List<?> list = noticeReadService.selectReadUsersByNoticeId(page, noticeId, searchValue);
+        return getDataTable(page, list);
     }
 
     /**

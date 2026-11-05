@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.system.domain.SysLogininfor;
 import com.ruoyi.system.mapper.SysLogininforMapper;
 import com.ruoyi.system.service.ISysLogininforService;
@@ -37,7 +38,19 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      */
     @Override
     public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
-        return logininforMapper.selectLogininforList(logininfor);
+        return logininforMapper.selectLogininforPage(null, logininfor);
+    }
+
+    /**
+     * 分页查询系统登录日志集合（MyBatis-Plus 分页）
+     *
+     * @param page       分页对象
+     * @param logininfor 访问日志对象
+     * @return 登录记录集合
+     */
+    @Override
+    public List<SysLogininfor> selectLogininforList(IPage<SysLogininfor> page, SysLogininfor logininfor) {
+        return logininforMapper.selectLogininforPage(page, logininfor);
     }
 
     /**

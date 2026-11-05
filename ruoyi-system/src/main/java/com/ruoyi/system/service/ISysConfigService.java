@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.system.domain.SysConfig;
 
 import java.util.List;
@@ -40,6 +41,15 @@ public interface ISysConfigService {
      * @return 参数配置集合
      */
     public List<SysConfig> selectConfigList(SysConfig config);
+
+    /**
+     * 分页查询参数配置列表（MyBatis-Plus 分页）
+     *
+     * @param page   分页对象
+     * @param config 参数配置信息
+     * @return 参数配置集合
+     */
+    public List<SysConfig> selectConfigList(IPage<SysConfig> page, SysConfig config);
 
     /**
      * 新增参数配置

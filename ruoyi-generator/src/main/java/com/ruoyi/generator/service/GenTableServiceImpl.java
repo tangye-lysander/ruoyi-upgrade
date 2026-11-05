@@ -2,6 +2,8 @@ package com.ruoyi.generator.service;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.GenConstants;
 import com.ruoyi.common.core.text.CharsetKit;
@@ -78,14 +80,26 @@ public class GenTableServiceImpl implements IGenTableService {
     }
 
     /**
-     * 查询业务列表
+     * 查询业务列表（不分页）
      *
      * @param genTable 业务信息
      * @return 业务集合
      */
     @Override
     public List<GenTable> selectGenTableList(GenTable genTable) {
-        return genTableMapper.selectGenTableList(genTable);
+        return genTableMapper.selectGenTableList(null, genTable);
+    }
+
+    /**
+     * 分页查询业务列表
+     *
+     * @param page     分页对象
+     * @param genTable 业务信息
+     * @return 业务集合
+     */
+    @Override
+    public List<GenTable> selectGenTableList(IPage<GenTable> page, GenTable genTable) {
+        return genTableMapper.selectGenTableList(page, genTable);
     }
 
     /**
@@ -131,10 +145,10 @@ public class GenTableServiceImpl implements IGenTableService {
     public void updateGenTable(GenTable genTable) {
         String options = JSON.toJSONString(genTable.getParams());
         genTable.setOptions(options);
-        int row = genTableMapper.updateGenTable(genTable);
+        int row = genTableMapper.updateById(genTable);
         if (row > 0) {
             for (GenTableColumn genTableColumn : genTable.getColumns()) {
-                genTableColumnMapper.updateGenTableColumn(genTableColumn);
+                genTableColumnMapper.updateById(genTableColumn);
             }
         }
     }
@@ -148,8 +162,11 @@ public class GenTableServiceImpl implements IGenTableService {
     @Override
     @Transactional
     public void deleteGenTableByIds(Long[] tableIds) {
-        genTableMapper.deleteGenTableByIds(tableIds);
-        genTableColumnMapper.deleteGenTableColumnByIds(tableIds);
+        List<Long> ids = Arrays.asList(tableIds);
+        genTableMapper.deleteByIds(ids);
+        // 子表字段按归属表编号 table_id 级联清除
+        genTableColumnMapper.delete(new LambdaQueryWrapper<GenTableColumn>()
+                .in(GenTableColumn::getTableId, ids));
     }
 
     /**
@@ -176,13 +193,13 @@ public class GenTableServiceImpl implements IGenTableService {
                 String tableName = table.getTableName();
                 table.setTplWebType(tplWebType);
                 GenUtils.initTable(table, operName);
-                int row = genTableMapper.insertGenTable(table);
+                int row = genTableMapper.insert(table);
                 if (row > 0) {
                     // 保存列信息
                     List<GenTableColumn> genTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
                     for (GenTableColumn column : genTableColumns) {
                         GenUtils.initColumnField(column, table);
-                        genTableColumnMapper.insertGenTableColumn(column);
+                        genTableColumnMapper.insert(column);
                     }
                 }
             }
@@ -304,15 +321,15 @@ public class GenTableServiceImpl implements IGenTableService {
                     column.setIsRequired(prevColumn.getIsRequired());
                     column.setHtmlType(prevColumn.getHtmlType());
                 }
-                genTableColumnMapper.updateGenTableColumn(column);
+                genTableColumnMapper.updateById(column);
             } else {
-                genTableColumnMapper.insertGenTableColumn(column);
+                genTableColumnMapper.insert(column);
             }
         });
 
         List<GenTableColumn> delColumns = tableColumns.stream().filter(column -> !dbTableColumnNames.contains(column.getColumnName())).collect(Collectors.toList());
         if (StringUtils.isNotEmpty(delColumns)) {
-            genTableColumnMapper.deleteGenTableColumns(delColumns);
+            genTableColumnMapper.deleteByIds(delColumns.stream().map(GenTableColumn::getColumnId).collect(Collectors.toList()));
         }
     }
 

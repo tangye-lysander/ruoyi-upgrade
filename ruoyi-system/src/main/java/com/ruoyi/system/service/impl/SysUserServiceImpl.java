@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import com.ruoyi.common.annotation.DataScope;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -48,7 +49,7 @@ public class SysUserServiceImpl implements ISysUserService {
     private final ISysDeptService deptService;
 
     /**
-     * 根据条件分页查询用户列表
+     * 根据条件查询用户列表
      *
      * @param user 用户信息
      * @return 用户信息集合信息
@@ -56,11 +57,24 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserList(SysUser user) {
-        return userMapper.selectUserList(user);
+        return userMapper.selectUserPage(null, user);
     }
 
     /**
-     * 根据条件分页查询已分配用户角色列表
+     * 分页查询用户列表（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<SysUser> selectUserList(IPage<SysUser> page, SysUser user) {
+        return userMapper.selectUserPage(page, user);
+    }
+
+    /**
+     * 根据条件查询已分配用户角色列表
      *
      * @param user 用户信息
      * @return 用户信息集合信息
@@ -68,11 +82,24 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectAllocatedList(SysUser user) {
-        return userMapper.selectAllocatedList(user);
+        return userMapper.selectAllocatedPage(null, user);
     }
 
     /**
-     * 根据条件分页查询未分配用户角色列表
+     * 分页查询已分配用户角色列表（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<SysUser> selectAllocatedList(IPage<SysUser> page, SysUser user) {
+        return userMapper.selectAllocatedPage(page, user);
+    }
+
+    /**
+     * 根据条件查询未分配用户角色列表
      *
      * @param user 用户信息
      * @return 用户信息集合信息
@@ -80,7 +107,20 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUnallocatedList(SysUser user) {
-        return userMapper.selectUnallocatedList(user);
+        return userMapper.selectUnallocatedPage(null, user);
+    }
+
+    /**
+     * 分页查询未分配用户角色列表（MyBatis-Plus 分页）
+     *
+     * @param page 分页对象
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @Override
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<SysUser> selectUnallocatedList(IPage<SysUser> page, SysUser user) {
+        return userMapper.selectUnallocatedPage(page, user);
     }
 
     /**

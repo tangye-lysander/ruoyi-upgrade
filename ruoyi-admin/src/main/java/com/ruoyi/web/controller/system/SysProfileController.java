@@ -131,11 +131,6 @@ public class SysProfileController extends BaseController {
                     .setSaveFilename(OssFileUtils.getSaveFilename(objectKey))
                     .upload();
             if (userService.updateUserAvatar(loginUser.getUserId(), objectKey)) {
-                // 删除旧头像
-                String oldAvatar = loginUser.getUser().getAvatar();
-                if (StringUtils.isNotEmpty(oldAvatar)) {
-                    fileStorageService.delete(OssFileUtils.getFileUrl(oldAvatar));
-                }
                 AjaxResult ajax = AjaxResult.success();
                 ajax.put("imgUrl", objectKey);
                 // 更新缓存用户头像

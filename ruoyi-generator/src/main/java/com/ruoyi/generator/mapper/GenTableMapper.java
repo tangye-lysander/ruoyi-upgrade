@@ -1,22 +1,30 @@
 package com.ruoyi.generator.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.generator.domain.GenTable;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
  * 业务 数据层
+ * <p>
+ * gen_table 的常规 CRUD 走 MyBatis-Plus 内置方法（BaseMapper），
+ * 这里保留的方法都是无法用条件构造器表达的语句：information_schema 元数据查询、
+ * gen_table 与 gen_table_column 的 LEFT JOIN 组装查询，以及 DDL 执行。
  *
  * @author 棠野·Lysander
  */
-public interface GenTableMapper {
+public interface GenTableMapper extends BaseMapper<GenTable> {
     /**
-     * 查询业务列表
+     * 查询业务列表（分页由 MyBatis-Plus 插件处理，page 传 null 则不分页）
      *
+     * @param page     分页对象
      * @param genTable 业务信息
      * @return 业务集合
      */
-    public List<GenTable> selectGenTableList(GenTable genTable);
+    public List<GenTable> selectGenTableList(IPage<GenTable> page, @Param("genTable") GenTable genTable);
 
     /**
      * 查询据库列表
@@ -56,30 +64,6 @@ public interface GenTableMapper {
      * @return 业务信息
      */
     public GenTable selectGenTableByName(String tableName);
-
-    /**
-     * 新增业务
-     *
-     * @param genTable 业务信息
-     * @return 结果
-     */
-    public int insertGenTable(GenTable genTable);
-
-    /**
-     * 修改业务
-     *
-     * @param genTable 业务信息
-     * @return 结果
-     */
-    public int updateGenTable(GenTable genTable);
-
-    /**
-     * 批量删除业务
-     *
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    public int deleteGenTableByIds(Long[] ids);
 
     /**
      * 创建表

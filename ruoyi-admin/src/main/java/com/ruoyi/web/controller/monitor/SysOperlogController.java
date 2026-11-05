@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.monitor;
 
 import com.ruoyi.common.annotation.Log;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -34,9 +35,9 @@ public class SysOperlogController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:operlog:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysOperLog operLog) {
-        startPage();
-        List<SysOperLog> list = operLogService.selectOperLogList(operLog);
-        return getDataTable(list);
+        Page<SysOperLog> page = buildPage();
+        List<SysOperLog> list = operLogService.selectOperLogList(page, operLog);
+        return getDataTable(page, list);
     }
 
     @Operation(summary = "导出操作日志列表", description = "按查询条件导出操作日志 Excel")

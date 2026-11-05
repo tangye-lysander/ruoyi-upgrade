@@ -1,15 +1,19 @@
 package com.ruoyi.quartz.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.quartz.domain.SysJobLog;
 
 import java.util.List;
 
 /**
  * 调度任务日志信息 数据层
+ * <p>
+ * 与 SysJobMapper 一致，sys_job_log 的写入位于调度线程的异常敏感路径上，
+ * 全部语句保留 XML 自定义 SQL，继承 BaseMapper 仅为统一形态。
  *
  * @author 棠野·Lysander
  */
-public interface SysJobLogMapper {
+public interface SysJobLogMapper extends BaseMapper<SysJobLog> {
     /**
      * 获取quartz调度器日志的计划任务
      *

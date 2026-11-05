@@ -1,5 +1,6 @@
 package com.ruoyi.system.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.system.domain.SysNotice;
 import com.ruoyi.system.domain.SysNoticeRead;
 import org.apache.ibatis.annotations.Param;
@@ -57,13 +58,14 @@ public interface SysNoticeReadMapper {
     public List<SysNotice> selectNoticeListWithReadStatus(@Param("userId") Long userId, @Param("limit") int limit);
 
     /**
-     * 查询已阅读某公告的用户列表
+     * 查询已阅读某公告的用户列表（分页由 MyBatis-Plus 插件处理）
      *
+     * @param page        分页对象
      * @param noticeId    公告ID
      * @param searchValue 搜索值
      * @return 已读用户列表
      */
-    public List<Map<String, Object>> selectReadUsersByNoticeId(@Param("noticeId") Long noticeId, @Param("searchValue") String searchValue);
+    public List<Map<String, Object>> selectReadUsersByNoticeId(IPage<Map<String, Object>> page, @Param("noticeId") Long noticeId, @Param("searchValue") String searchValue);
 
     /**
      * 公告删除时清理对应已读记录

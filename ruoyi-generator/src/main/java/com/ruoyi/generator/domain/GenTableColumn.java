@@ -1,5 +1,10 @@
 package com.ruoyi.generator.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.utils.StringUtils;
 import jakarta.validation.constraints.NotBlank;
@@ -17,12 +22,14 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = true)
+@TableName("gen_table_column")
 public class GenTableColumn extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 编号
      */
+    @TableId(value = "column_id", type = IdType.AUTO)
     private Long columnId;
 
     /**
@@ -58,37 +65,47 @@ public class GenTableColumn extends BaseEntity {
 
     /**
      * 是否主键（1是）
+     * <p>
+     * isPk 这类以 is 开头的字段，其无参判定方法 isPk() 会被 Jackson 识别成布尔属性 pk，
+     * 用 @JsonProperty 固定为字符串名，保持前端与 Velocity 模板的取值方式不变。
      */
+    @JsonProperty("isPk")
     private String isPk;
 
     /**
      * 是否自增（1是）
      */
+    @JsonProperty("isIncrement")
     private String isIncrement;
 
     /**
      * 是否必填（1是）
      */
+    @JsonProperty("isRequired")
     private String isRequired;
 
     /**
      * 是否为插入字段（1是）
      */
+    @JsonProperty("isInsert")
     private String isInsert;
 
     /**
      * 是否编辑字段（1是）
      */
+    @JsonProperty("isEdit")
     private String isEdit;
 
     /**
      * 是否列表字段（1是）
      */
+    @JsonProperty("isList")
     private String isList;
 
     /**
      * 是否查询字段（1是）
      */
+    @JsonProperty("isQuery")
     private String isQuery;
 
     /**

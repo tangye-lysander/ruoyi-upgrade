@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 
 import java.util.List;
@@ -11,12 +12,21 @@ import java.util.List;
  */
 public interface ISysDictDataService {
     /**
-     * 根据条件分页查询字典数据
+     * 根据条件查询字典数据
      *
      * @param dictData 字典数据信息
      * @return 字典数据集合信息
      */
     public List<SysDictData> selectDictDataList(SysDictData dictData);
+
+    /**
+     * 分页查询字典数据（MyBatis-Plus 分页）
+     *
+     * @param page     分页对象
+     * @param dictData 字典数据信息
+     * @return 字典数据集合信息
+     */
+    public List<SysDictData> selectDictDataList(IPage<SysDictData> page, SysDictData dictData);
 
     /**
      * 根据字典类型和字典键值查询字典数据信息

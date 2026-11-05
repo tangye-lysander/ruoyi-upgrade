@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.domain.entity.SysDictType;
@@ -40,14 +41,26 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
     }
 
     /**
-     * 根据条件分页查询字典类型
+     * 根据条件查询字典类型
      *
      * @param dictType 字典类型信息
      * @return 字典类型集合信息
      */
     @Override
     public List<SysDictType> selectDictTypeList(SysDictType dictType) {
-        return dictTypeMapper.selectDictTypeList(dictType);
+        return dictTypeMapper.selectDictTypePage(null, dictType);
+    }
+
+    /**
+     * 分页查询字典类型（MyBatis-Plus 分页）
+     *
+     * @param page     分页对象
+     * @param dictType 字典类型信息
+     * @return 字典类型集合信息
+     */
+    @Override
+    public List<SysDictType> selectDictTypeList(IPage<SysDictType> page, SysDictType dictType) {
+        return dictTypeMapper.selectDictTypePage(page, dictType);
     }
 
     /**
@@ -126,7 +139,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
     public void loadingDictCache() {
         SysDictData dictData = new SysDictData();
         dictData.setStatus("0");
-        Map<String, List<SysDictData>> dictDataMap = dictDataMapper.selectDictDataList(dictData).stream().collect(Collectors.groupingBy(SysDictData::getDictType));
+        Map<String, List<SysDictData>> dictDataMap = dictDataMapper.selectDictDataPage(null, dictData).stream().collect(Collectors.groupingBy(SysDictData::getDictType));
         for (Map.Entry<String, List<SysDictData>> entry : dictDataMap.entrySet()) {
             DictUtils.setDictCache(entry.getKey(), entry.getValue().stream().sorted(Comparator.comparing(SysDictData::getDictSort)).collect(Collectors.toList()));
         }
