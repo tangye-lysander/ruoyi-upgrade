@@ -10,6 +10,7 @@ import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.file.OssFileUtils;
 import com.ruoyi.framework.web.service.SysLoginService;
 import com.ruoyi.framework.web.service.SysPermissionService;
 import com.ruoyi.framework.web.service.TokenService;
@@ -73,6 +74,10 @@ public class SysLoginController {
     public AjaxResult getInfo() {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         SysUser user = loginUser.getUser();
+        // 头像转换为完整访问 URL（缓存中仍存 objectKey，转换幂等：已是 http(s) 时原样返回）
+        if (StringUtils.isNotBlank(user.getAvatar())) {
+            user.setAvatar(OssFileUtils.getFileUrl(user.getAvatar()));
+        }
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合

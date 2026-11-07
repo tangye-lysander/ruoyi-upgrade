@@ -86,10 +86,18 @@ public class OssFileUtils {
     /**
      * 根据 objectKey 拼接完整访问 URL
      *
+     * 幂等：传入值已是 http(s) 完整地址时原样返回
+     *
      * @param objectKey 存储路径，形如 /img/2026/07/26/xxx.jpg
      * @return 完整 URL
      */
     public static String getFileUrl(String objectKey) {
+        if (StringUtils.isBlank(objectKey)) {
+            return objectKey;
+        }
+        if (objectKey.startsWith("http://") || objectKey.startsWith("https://")) {
+            return objectKey;
+        }
         return getDomain() + StringUtils.stripStart(objectKey, "/");
     }
 }

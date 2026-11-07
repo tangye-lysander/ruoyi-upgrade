@@ -132,7 +132,8 @@ public class SysProfileController extends BaseController {
                     .upload();
             if (userService.updateUserAvatar(loginUser.getUserId(), objectKey)) {
                 AjaxResult ajax = AjaxResult.success();
-                ajax.put("imgUrl", objectKey);
+                // 返回完整访问 URL（数据库与缓存仍存 objectKey）
+                ajax.put("imgUrl", OssFileUtils.getFileUrl(objectKey));
                 // 更新缓存用户头像
                 loginUser.getUser().setAvatar(objectKey);
                 tokenService.setLoginUser(loginUser);
